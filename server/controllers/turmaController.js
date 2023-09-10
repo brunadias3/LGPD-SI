@@ -24,6 +24,14 @@ class TurmaController {
         }
     }
 
+    async getTurma(req, res){
+        const id = parseInt(req.params.id)
+        const turma = await Turma.findOne({ where: { id: id } }).catch((e) => {
+            return { error: "Identificador inválido" }
+        })
+        return res.json(turma);
+    }
+
     async update(req, res) {
         try {
             await Turma.update(

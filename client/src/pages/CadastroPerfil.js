@@ -126,7 +126,6 @@ function CadastrarPerfil() {
                 return false;
             }
         } else {
-
             return false;
         }
     }
