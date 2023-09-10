@@ -12,7 +12,7 @@ function CadastroUsuario() {
         const email = document.getElementById("emailUsu");
         const senha = document.getElementById("senhaUsu");
 
-        let url = 'http://localhost:3000/user/create'
+        let url = 'http://localhost:/user/create
 
         fetch(url, {
             method: "POST",
@@ -23,9 +23,9 @@ function CadastroUsuario() {
             body: JSON.stringify({ login: email.value, token: senha.value })
         }).then((resp) => resp.json()).then((data) => {
             if (data.error) {
-                alert("Fudeu")
+                alert(data.error)
             } else {
-                alert("Foi")
+                alert(data.message)
             }
         })
     }

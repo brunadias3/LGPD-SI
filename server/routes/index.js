@@ -1,11 +1,13 @@
 import express from "express";
 import usuario from "./usuario.js";
 import perfil from "./perfil.js";
+import turma from "./turma.js"
 
 const routes = express.Router();
 
 routes.use("/user", usuario);
-routes.use("/profile",perfil)
+routes.use("/profile",perfil);
+routes.use("/team",turma);
 
 routes.use((req, res) => res.status(404).json({ error: "Rota não encontrada" }));
 

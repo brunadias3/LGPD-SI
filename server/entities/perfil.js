@@ -1,6 +1,7 @@
 import { Sequelize } from "sequelize";
 import connection from "../connection/index.js";
 import Usuario from "./usuario.js";
+import Turma from './turma.js';
 
 const Perfil = connection.define('perfils', {
     id: {
@@ -23,25 +24,49 @@ const Perfil = connection.define('perfils', {
         unique: true,
         allowNull: false
     },
-    data: {
-        type: Sequelize.DATE
+    data_nac: {
+        type: Sequelize.DATE,
+        allowNull: false
     },
     nome: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
     },
     tipo_usuario: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false
+    },
+    cpf_res: {
+        type: Sequelize.STRING
+    },
+    email_res: {
+        type: Sequelize.STRING
+    },
+    rg_res: {
+        type: Sequelize.STRING
+    },
+    data_nac_res: {
+        type: Sequelize.DATE
+    },
+    nome_res: {
+        type: Sequelize.STRING
     },
     usuario_id: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
             model: Usuario,  
+            key: 'id'       
+        }
+    },
+    turma_id: {
+        type: Sequelize.INTEGER,
+        references: {
+            model: Turma,  
             key: 'id'       
         }
     }
 
 })
-Perfil.belongsTo(Usuario, { foreignKey: 'usuario_id' })
-
 
 export default Perfil;

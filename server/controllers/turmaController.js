@@ -1,13 +1,13 @@
-import Usuario from "../entities/usuario.js";
+import Turma from "../entities/turma.js";
 
-class UsuarioController {
+class TurmaController {
     async create(req, res) {
         try {
-             await Usuario.create({
-                login: req.body.login,
-                senha: req.body.senha
+            await Turma.create({
+                nome: req.body.nome,
+                descricao: req.body.descricao
             });
-            res.status(201).json({message:"Usuario cadastrado"});
+            res.status(201).json({message:"Turma cadastrada"});
 
         } catch (error) {
             res.status(500).json({ error: error });
@@ -16,8 +16,8 @@ class UsuarioController {
 
     async list(req, res) {
         try {
-            const usuarios = await Usuario.findAll();
-            res.status(200).json(usuarios);
+            const turmas = await Turma.findAll();
+            res.status(200).json(turmas);
 
         } catch (error) {
             res.status(500).json({ error: error });
@@ -26,10 +26,10 @@ class UsuarioController {
 
     async update(req, res) {
         try {
-            await Usuario.update(
+            await Turma.update(
                 {
-                    login: req.body.login,
-                    senha: req.body.senha
+                    nome: req.body.nome,
+                    descricao: req.body.descricao
                 },
                 {
                     where: {
@@ -37,7 +37,7 @@ class UsuarioController {
                     }
                 }
             );
-            res.status(200).json({message: "Os Dados Foram Atualizados com Sucesso."});
+            res.status(200).json({ message:"Os Dados Foram Atualizados com Sucesso."});
 
         } catch (error) {
             console.log(error);
@@ -47,12 +47,12 @@ class UsuarioController {
 
     async delete(req, res) {
         try {
-            await Usuario.destroy({
+            await Turma.destroy({
                 where: {
                     id: req.params.id
                 }
             });
-            res.status(200).json({ message: "Usuario Removido" });
+            res.status(200).json({ message: "Turma Removida" });
 
         } catch (error) {
             res.status(500).json({ error: error });
@@ -60,4 +60,4 @@ class UsuarioController {
     }
 }
 
-export default new UsuarioController();
+export default new TurmaController();

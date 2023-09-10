@@ -1,22 +1,20 @@
 import { Sequelize } from "sequelize";
 import connection from "../connection/index.js";
 
-const Usuario = connection.define('usuarios', {
+const Turma = connection.define('turmas', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true
     },
-    login: {
+    nome: {
         type: Sequelize.STRING,
         unique: true
-        
     },
-    senha: {
+    descricao: {
         type: Sequelize.STRING
     }
+});
 
-})
-
-export default Usuario;
+export default Turma;

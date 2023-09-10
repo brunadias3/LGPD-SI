@@ -7,15 +7,24 @@ class PerfilController {
                 cpf: req.body.cpf,
                 email: req.body.email,
                 rg: req.body.rg,
-                data: req.body.data,
+                data_nac: req.body.data_nac,
                 nome: req.body.nome,
+
                 tipo_usuario: req.body.tipo_usuario,
-                usuario_id: req.body.usuario_id
+
+                cpf_res: req.body.cpf_res,
+                email_res: req.body.email_res,
+                rg_res: req.body.rg_res,
+                data_nac_res: req.body.data_nac_res,
+                nome_res: req.body.nome_res,
+
+                usuario_id: req.body.usuario_id,
+                turma_id: req.body.turma_id
             })
             res.status(201).json(perfil)
 
         } catch (error) {
-            res.status(500).json({ message: error })
+            res.status(500).json({ error: error })
         }
     }
 
@@ -25,7 +34,7 @@ class PerfilController {
             res.status(201).json(perfis)
 
         } catch (error) {
-            res.status(500).json({ message: error })
+            res.status(500).json({ error: error })
         }
     }
 
@@ -35,21 +44,30 @@ class PerfilController {
                 cpf: req.body.cpf,
                 email: req.body.email,
                 rg: req.body.rg,
-                data: req.body.data,
+                data_nac: req.body.data_nac,
                 nome: req.body.nome,
+
                 tipo_usuario: req.body.tipo_usuario,
-                usuario_id: req.body.usuario_id
+
+                cpf_res: req.body.cpf_res,
+                email_res: req.body.email_res,
+                rg_res: req.body.rg_res,
+                data_nac_res: req.body.data_nac_res,
+                nome_res: req.body.nome_res,
+
+                usuario_id: req.body.usuario_id,
+                turma_id: req.body.turma_id
             },
                 {
                     where: {
                         id: req.params.id
                     }
                 })
-            res.status(201).json("Os Dados Foram Atualizados com Sucesso.")
+            res.status(201).json({ message:"Os Dados Foram Atualizados com Sucesso."})
 
         } catch (error) {
             console.log(error)
-            res.status(500).json({ message: error })
+            res.status(500).json({ error: error })
         }
     }
 
@@ -60,10 +78,10 @@ class PerfilController {
                     id: req.params.id
                 }
             })
-            res.status(201).json({ message: 'Perfil Removido' })
+            res.status(201).json({ message: "Perfil Removido" })
 
         } catch (error) {
-            res.status(500).json({ message: error })
+            res.status(500).json({ error: error })
         }
     }
 
