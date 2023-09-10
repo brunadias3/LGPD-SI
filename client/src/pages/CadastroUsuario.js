@@ -4,7 +4,6 @@ import { useState } from "react";
 
 function CadastroUsuario() {
 
-
     const [emailLogin, setEmailLogin] = useState("")
     const [senha, setSenha] = useState("")
 
