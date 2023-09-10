@@ -11,14 +11,14 @@ function CadastroUsuario() {
         const emailLogin = document.getElementById("emailLogin");
         const senha = document.getElementById("senhaUsu");
 
-        let url = 'http://localhost:/user/create
+        let url =  'http://localhost:3000/user/create'
 
         fetch(url, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },
-            body: JSON.stringify({ login: emailLogin.value, token: senha.value })
+            body: JSON.stringify({ login: emailLogin.value, senha: senha.value })
         }).then((resp) => resp.json()).then((data) => {
             if (data.error) {
                 alert(data.error)

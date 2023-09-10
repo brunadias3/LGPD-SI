@@ -33,7 +33,7 @@ const Perfil = connection.define('perfils', {
         allowNull: false
     },
     tipo_usuario: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false
     },
     cpf_res: {
@@ -51,6 +51,7 @@ const Perfil = connection.define('perfils', {
     nome_res: {
         type: Sequelize.STRING
     },
+
     usuario_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -66,7 +67,6 @@ const Perfil = connection.define('perfils', {
             key: 'id'       
         }
     }
-
 })
 
 export default Perfil;

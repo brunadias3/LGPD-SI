@@ -15,6 +15,7 @@ const Turma = connection.define('turmas', {
     descricao: {
         type: Sequelize.STRING
     }
+
 });
 
 export default Turma;
