@@ -5,22 +5,21 @@ import { useState } from "react";
 function CadastroUsuario() {
 
 
-    const [email, setEmail] = useState("")
+    const [emailLogin, setEmailLogin] = useState("")
     const [senha, setSenha] = useState("")
 
     function CadastrarUsu() {
-        const email = document.getElementById("emailUsu");
+        const emailLogin = document.getElementById("emailLogin");
         const senha = document.getElementById("senhaUsu");
 
         let url = 'http://localhost:/user/create
 
         fetch(url, {
             method: "POST",
-            port: 3304,
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },
-            body: JSON.stringify({ login: email.value, token: senha.value })
+            body: JSON.stringify({ login: emailLogin.value, token: senha.value })
         }).then((resp) => resp.json()).then((data) => {
             if (data.error) {
                 alert(data.error)
@@ -34,9 +33,8 @@ function CadastroUsuario() {
         <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl ">
 
             <Header title={"Cadastro de usuarios"} />
-            <Campo text={"E-mail"} id={"emailUsu"} placeholder={"E-mail do usuário"} type={"text"} value={email} setValue={setEmail} />
+            <Campo text={"E-mail para login"} id={"emailLogin"} placeholder={"Digite o e-mail para efetuar o login"} type={"email"} value={emailLogin} setValue={setEmailLogin} />
             <Campo text={"Senha"} id={"senhaUsu"} placeholder={"Senha do usuário"} type={"password"} value={senha} setValue={setSenha} />
-
             <div className="mt-5 mb-5 flex items-center justify-center" >
                 <button
                     className="bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full"
