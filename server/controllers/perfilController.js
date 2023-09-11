@@ -16,9 +16,8 @@ class PerfilController {
                 rg_res: req.body.rg_res,
                 data_nac_res: req.body.data_nac_res,
                 nome_res: req.body.nome_res,
-
-                usuario_id: req.body.usuario_id,
-                turma_id: req.body.turma_id
+                usuario_id: req.body.usuario_id
+               
             })
             res.status(201).json(perfil)
 
@@ -52,9 +51,7 @@ class PerfilController {
                 rg_res: req.body.rg_res,
                 data_nac_res: req.body.data_nac_res,
                 nome_res: req.body.nome_res,
-
-                usuario_id: req.body.usuario_id,
-                turma_id: req.body.turma_id
+                usuario_id: req.body.usuario_id
             },
                 {
                     where: {

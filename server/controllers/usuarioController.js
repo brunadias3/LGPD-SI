@@ -6,7 +6,8 @@ class UsuarioController {
              await Usuario.create({
                 login: req.body.login,
                 tipo_usuario: req.body.tipo_usuario,
-                senha: req.body.senha
+                senha: req.body.senha,
+                turma_id: req.body.turma_id
             });
             res.status(201).json({message:"Usuario cadastrado"});
 
@@ -31,7 +32,8 @@ class UsuarioController {
                 {
                     login: req.body.login,
                     tipo_usuario: req.body.tipo_usuario,
-                    senha: req.body.senha
+                    senha: req.body.senha,
+                    turma_id: req.body.turma_id
                 },
                 {
                     where: {

@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize";
 import connection from "../connection/index.js";
 import Usuario from "./usuario.js";
-import Turma from './turma.js';
+
 
 const Perfil = connection.define('perfils', {
     id: {
@@ -54,13 +54,6 @@ const Perfil = connection.define('perfils', {
         allowNull: false,
         references: {
             model: Usuario,  
-            key: 'id'       
-        }
-    },
-    turma_id: {
-        type: Sequelize.INTEGER,
-        references: {
-            model: Turma,  
             key: 'id'       
         }
     }

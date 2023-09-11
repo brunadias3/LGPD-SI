@@ -1,5 +1,5 @@
-import Header from "../components/Header";
-import Campo from "../components/Campo";
+import Header from "../../components/Header";
+import Campo from "../../components/Campo";
 import { useState, useEffect } from "react";
 
 function CadastrarPerfil() {

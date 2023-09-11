@@ -1,5 +1,6 @@
 import { Sequelize } from "sequelize";
 import connection from "../connection/index.js";
+import Turma from './turma.js';
 
 const Usuario = connection.define('usuarios', {
     id: {
@@ -11,7 +12,7 @@ const Usuario = connection.define('usuarios', {
     login: {
         type: Sequelize.STRING,
         unique: true
-        
+
     },
     tipo_usuario: {
         type: Sequelize.STRING,
@@ -19,6 +20,13 @@ const Usuario = connection.define('usuarios', {
     },
     senha: {
         type: Sequelize.STRING
+    },
+    turma_id: {
+        type: Sequelize.INTEGER,
+        references: {
+            model: Turma,
+            key: 'id'
+        }
     }
 
 })

@@ -66,7 +66,7 @@ function NavBar() {
                                 <a className="cursor-pointer block py-2 pl-3 pr-4  rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 text-white hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700" >Home</a>
                             </li>
                             <li>
-                                <a onClick={() => window.location.href = "/cadastro"} className="cursor-pointer block py-2 pl-3 pr-4  rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 text-white hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Cadastrar novo usuário</a>
+                                <a onClick={() => window.location.href = "/gerenciar-usuarios"} className="cursor-pointer block py-2 pl-3 pr-4  rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 text-white hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Gerenciar Usuários</a>
                             </li>
                            
                             <li>
