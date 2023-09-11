@@ -110,13 +110,14 @@ function CadastrarPerfil() {
     }
 
     function verificarIdade() {
+        
         const dataNasc = document.getElementById('dataNasc');
 
         if (dataNasc) {
+
             const dataNascimentoUsuario = new Date(dataNasc.value);
             const dataAtual = new Date();
             const diferencaEmMilissegundos = dataAtual - dataNascimentoUsuario;
-
             const milissegundosPorAno = 1000 * 60 * 60 * 24 * 365.25; // Considera anos bissextos
             const idadeEmAnos = diferencaEmMilissegundos / milissegundosPorAno;
 

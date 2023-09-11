@@ -21,7 +21,7 @@ function NavBar() {
                         </button>
                         {/* Perfil do usuário */}
                         {isChecked ?
-                            (<div className="nav-item absolute right-1 top-16 bg-gray-700 p-8 rounded-lg w-96">
+                            (<div className="nav-item absolute right-1 top-16 bg-gray-700 p-8 rounded-lg w-96 z-50">
                                 <div className="flex  justify-end">
                                     <button class="font-bold py-2 px-4  hover:bg-gray-900 text-white rounded-full" onClick={() => { setIsChecked(false) }} > x </button>
                                 </div>
