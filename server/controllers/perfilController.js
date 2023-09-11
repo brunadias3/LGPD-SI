@@ -10,7 +10,6 @@ class PerfilController {
                 data_nac: req.body.data_nac,
                 nome: req.body.nome,
 
-                tipo_usuario: req.body.tipo_usuario,
 
                 cpf_res: req.body.cpf_res,
                 email_res: req.body.email_res,
@@ -47,7 +46,6 @@ class PerfilController {
                 data_nac: req.body.data_nac,
                 nome: req.body.nome,
 
-                tipo_usuario: req.body.tipo_usuario,
 
                 cpf_res: req.body.cpf_res,
                 email_res: req.body.email_res,

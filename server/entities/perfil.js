@@ -32,10 +32,7 @@ const Perfil = connection.define('perfils', {
         type: Sequelize.STRING,
         allowNull: false
     },
-    tipo_usuario: {
-        type: Sequelize.STRING,
-        allowNull: false
-    },
+   
     cpf_res: {
         type: Sequelize.STRING
     },

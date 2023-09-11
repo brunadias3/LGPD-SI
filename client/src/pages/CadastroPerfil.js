@@ -49,7 +49,6 @@ function CadastrarPerfil() {
         const nomeUsu = document.getElementById('nomePefil');
         const rg = document.getElementById('rg');
         const cpf = document.getElementById('cpf');
-        const tipoUsu = document.getElementById('tipoUsuario');
         const usuarioPerfil = document.getElementById('usuarioPerfil')
 
 
@@ -61,17 +60,6 @@ function CadastrarPerfil() {
 
         function verificaBody() {
             if (verificarIdade()) {
-                let maiorDeIdade = {
-                    usuario_id: usuarioPerfil.value,
-                    cpf: cpf.value,
-                    email: email.value,
-                    rg: rg.value,
-                    data_nac: dataNasc.value,
-                    nome: nomeUsu.value,
-                    tipo_usuario: tipoUsu.value
-                }
-                return maiorDeIdade;
-            } else {
                 let menorDeIdade = {
                     usuario_id: usuarioPerfil.value,
                     cpf: cpf.value,
@@ -79,14 +67,25 @@ function CadastrarPerfil() {
                     rg: rg.value,
                     data_nac: dataNasc.value,
                     nome: nomeUsu.value,
-                    tipo_usuario: tipoUsu.value,
                     cpf_res: cpfResp.value,
                     email_res: emailResp.value,
                     rg_res: rgResp.value,
                     data_nac_res: dataNascResp.value,
                     nome_res: nomeResp.value
                 }
+
                 return menorDeIdade;
+            } else {
+                let maiorDeIdade = {
+                    usuario_id: usuarioPerfil.value,
+                    cpf: cpf.value,
+                    email: email.value,
+                    rg: rg.value,
+                    data_nac: dataNasc.value,
+                    nome: nomeUsu.value,
+
+                }
+                return maiorDeIdade;
             }
         }
 
@@ -110,7 +109,7 @@ function CadastrarPerfil() {
     }
 
     function verificarIdade() {
-        
+
         const dataNasc = document.getElementById('dataNasc');
 
         if (dataNasc) {
@@ -122,9 +121,9 @@ function CadastrarPerfil() {
             const idadeEmAnos = diferencaEmMilissegundos / milissegundosPorAno;
 
             if (idadeEmAnos >= 18) {
-                return true;
-            } else {
                 return false;
+            } else {
+                return true;
             }
         } else {
             return false;
@@ -142,15 +141,7 @@ function CadastrarPerfil() {
             <Campo text={"CPF"} id={"cpf"} placeholder={"Digite o CPF"} type={"number"} value={cpfUsu} setValue={setCpfUsu} />
             <Campo text={"E-mail institucional"} id={"emailInst"} placeholder={"Digite o e-mail"} type={"email"} value={emailUsu} setValue={setEmailUsu} />
 
-            <div className='mt-5 m-0.5'>
-                <label className="text-lg font-bold dark:text-black " >Selecione o perfil do usuário</label>
-                <select id="tipoUsuario" defaultValue='default' className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500'>
-                    <option value="default" disabled>Selecione uma opção</option>
-                    <option value='1' >Corpo docente</option>
-                    <option value='2'>Aluno</option>
-                    <option value='3'>Diretoria</option>
-                </select>
-            </div>
+
 
             <div className='mt-5'>
                 <label className="text-lg font-bold dark:text-black " >Selecione Usuario</label>
@@ -164,7 +155,7 @@ function CadastrarPerfil() {
             <Campo text={"Data de nascimento"} id={"dataNasc"} type={"date"} value={dataNascUsu} setValue={setDataNascUsu} />
 
             {
-                !verificarIdade() ?
+                verificarIdade() ?
                     <>
                         <Campo text={"Nome Responsável"} id={"nomeResp"} placeholder={"Digite o nome"} type={"text"} value={nomeResponsavel} setValue={setNomeResponsavel} />
                         <Campo text={"RG Responsável"} id={"rgResp"} placeholder={"Digite o RG"} type={"number"} value={rgResponsavel} setValue={setRgResponsavel} />

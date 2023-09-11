@@ -5,6 +5,7 @@ class UsuarioController {
         try {
              await Usuario.create({
                 login: req.body.login,
+                tipo_usuario: req.body.tipo_usuario,
                 senha: req.body.senha
             });
             res.status(201).json({message:"Usuario cadastrado"});
@@ -29,6 +30,7 @@ class UsuarioController {
             await Usuario.update(
                 {
                     login: req.body.login,
+                    tipo_usuario: req.body.tipo_usuario,
                     senha: req.body.senha
                 },
                 {
