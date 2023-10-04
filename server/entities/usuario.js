@@ -28,6 +28,7 @@ const Usuario = connection.define('usuarios', {
             key: 'id'
         }
     }
+    
 
 })
 

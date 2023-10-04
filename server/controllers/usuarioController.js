@@ -1,15 +1,15 @@
 import Usuario from "../entities/usuario.js";
-
+import connection from "../connection/index.js";
 class UsuarioController {
     async create(req, res) {
         try {
-             await Usuario.create({
+            await Usuario.create({
                 login: req.body.login,
                 tipo_usuario: req.body.tipo_usuario,
                 senha: req.body.senha,
                 turma_id: req.body.turma_id
             });
-            res.status(201).json({message:"Usuario cadastrado"});
+            res.status(201).json({ message: "Usuario cadastrado" });
 
         } catch (error) {
             res.status(500).json({ error: error });
@@ -18,10 +18,15 @@ class UsuarioController {
 
     async list(req, res) {
         try {
-            const usuarios = await Usuario.findAll();
+            var query = "select u.id, u.login, t.Nome from usuarios as u left join turmas as t on t.id = u.turma_id "
+      
+            const usuarios = await connection.query(query, {raw:true})
+            console.log(usuarios)
+
             res.status(200).json(usuarios);
 
         } catch (error) {
+          
             res.status(500).json({ error: error });
         }
     }
@@ -41,7 +46,7 @@ class UsuarioController {
                     }
                 }
             );
-            res.status(200).json({message: "Os Dados Foram Atualizados com Sucesso."});
+            res.status(200).json({ message: "Os Dados Foram Atualizados com Sucesso." });
 
         } catch (error) {
             console.log(error);
