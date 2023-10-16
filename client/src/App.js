@@ -9,6 +9,7 @@ import EditarTurma from './pages/turmas/EditarTurma';
 import GerenciarUsuarios from './pages/usuarios/GerenciarUsuarios';
 import ListarUsuario from './pages/usuarios/listarUsuario';
 import Home from './pages/Home';
+import EditarPerfil from './pages/perfil/EditarPerfil';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
           <Route path='/listar-turmas' element={<ListarTurmas />} />
           <Route path='/editar-turma/:id' element={<EditarTurma />} />
           <Route path='/listar-usuarios' element={<ListarUsuario />} />
+          <Route path='/editar-perfil/:id' element={<EditarPerfil />} />
         </Routes>
       </BrowserRouter>
     </>
