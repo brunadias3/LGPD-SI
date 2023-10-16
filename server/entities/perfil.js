@@ -13,26 +13,55 @@ const Perfil = connection.define('perfils', {
     cpf: {
         type: Sequelize.STRING,
         unique: true,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notNull: {
+                msg: 'O campo CPF é obrigatório.'
+            }
+        }
     },
     email: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            isEmail: {
+                msg: 'O campo Email deve conter @ e .com. '
+            },
+            notNull: {
+                msg: 'O campo Email não pode é obrigatório.'
+            }
+        }
     },
     rg: {
         type: Sequelize.STRING,
         unique: true,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notNull: {
+                msg: 'O campo RG é obrigatório.'
+            }
+        }
     },
     data_nac: {
         type: Sequelize.DATE,
-        allowNull: false
+        allowNull: false,
+        isDate: true,
+        validate: {
+            notNull: {
+                msg: 'O campo Data de Nacimento é obrigatório.'
+            }
+        }
     },
     nome: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notNull: {
+                msg: 'O campo Nome é obrigatório.'
+            }
+        }
     },
-   
+
     cpf_res: {
         type: Sequelize.STRING
     },
@@ -52,11 +81,28 @@ const Perfil = connection.define('perfils', {
     usuario_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        unique: true,
         references: {
-            model: Usuario,  
-            key: 'id'       
+            model: Usuario,
+            key: 'id'
         }
     }
-})
+    },{
+    validate: {
+        validacaIdade() {
+            if (this.data_nac) {
+                const hoje = new Date();
+                const idade = hoje.getFullYear() - this.data_nac.getFullYear();
+
+                if (idade < 18) {
+                    if (!this.cpf_res || !this.email_res || !this.rg_res || !this.data_nac_res || !this.nome_res) {
+                        throw new Error('Os Campos do responsavel são obrigatórios.');
+                    }
+                }
+            }
+        }
+    }
+});
+
 
 export default Perfil;
