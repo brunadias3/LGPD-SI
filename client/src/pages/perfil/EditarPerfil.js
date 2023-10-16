@@ -43,7 +43,7 @@ function EditarPerfil() {
             setDataNascResponsavel(partesDataRes)
         })
     }
-    function CadastrarUsu() {
+    function EditarUsu() {
 
         const email = document.getElementById('emailInst');
         const dataNasc = document.getElementById('dataNasc');
@@ -90,9 +90,9 @@ function EditarPerfil() {
             }
         }
 
-        let url = 'http://localhost:3000/profile/create'
+        let url = `http://localhost:3000/profile/update/${id}`
         fetch(url, {
-            method: 'POST',
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },
@@ -160,7 +160,7 @@ function EditarPerfil() {
             <div className="mt-5 mb-5 flex items-center justify-center" >
                 <button
                     className="bg-gray-900 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded-full"
-                    onClick={CadastrarUsu}
+                    onClick={EditarUsu}
                 >
                     Salvar alterações
                 </button>
