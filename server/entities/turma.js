@@ -10,7 +10,13 @@ const Turma = connection.define('turmas', {
     },
     nome: {
         type: Sequelize.STRING,
-        unique: true
+        unique: true,
+        allowNull: false,
+        validate: {
+            notNull: {
+                msg: 'O campo Nome é obrigatório.'
+            }
+        }
     },
     descricao: {
         type: Sequelize.STRING
