@@ -3,7 +3,7 @@ import Header from "../../components/Header";
 
 
 function ListarUsuario() {
-    const headers = ["Nome do Usuário", "Tipo", "Turma", "E-mail", "Editar", "Deletar"]
+    const headers = ["E-mail", "Turma", "Editar", "Deletar"]
     const [usuarios, setUsuarios] = useState([])
 
     function getUsuario() {
@@ -14,14 +14,16 @@ function ListarUsuario() {
                 'Content-Type': 'application/json;charset=utf-8'
             }
         }).then((resposta) => resposta.json()).then((data) => {
+            
             var usuarios = []
-            data.map(element => {
+            data[0].map(element => {
+
                 usuarios.push({
                     id: element.id,
                     email: element.login,
-                    turma: element.turma_id
+                    turma: element.Nome
                 })
-                console.log(usuarios);
+            
             });
             setUsuarios(usuarios)
         })

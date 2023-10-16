@@ -61,6 +61,7 @@ const Usuario = connection.define('usuarios', {
             }
         }
     }
+    
 
 })
 

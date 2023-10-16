@@ -120,10 +120,10 @@ function CadastrarPerfil() {
             const milissegundosPorAno = 1000 * 60 * 60 * 24 * 365.25; // Considera anos bissextos
             const idadeEmAnos = diferencaEmMilissegundos / milissegundosPorAno;
 
-            if (idadeEmAnos >= 18) {
-                return false;
-            } else {
+            if (idadeEmAnos <= 18) {
                 return true;
+            } else {
+                return false;
             }
         } else {
             return false;
