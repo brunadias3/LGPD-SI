@@ -1,35 +1,22 @@
 import Turma from "../entities/turma.js";
 import Usuario from "../entities/usuario.js";
-<<<<<<< HEAD
 import CryptoJS from "crypto-js"
 
 class UsuarioController {
     async create(req, res) {
         try {
             const usuario = await Usuario.create({
-=======
-import connection from "../connection/index.js";
-class UsuarioController {
-    async create(req, res) {
-        try {
-            await Usuario.create({
->>>>>>> 51c6b9a5e923b4e55d790119af54670a21c864a0
+
                 login: req.body.login,
                 tipo_usuario: req.body.tipo_usuario,
                 senha: req.body.senha,
                 turma_id: req.body.turma_id
             });
-<<<<<<< HEAD
-            const chave = process.env.CHAVE;
-=======
-            res.status(201).json({ message: "Usuario cadastrado" });
->>>>>>> 51c6b9a5e923b4e55d790119af54670a21c864a0
 
+            const chave = process.env.CHAVE;
             const idCrip = usuario.id.toString();
             const textCrip = CryptoJS.AES.encrypt(idCrip, chave).toString();
             const valorSeguroParaURL = encodeURIComponent(textCrip);
-
-            // res.json(valorSeguroParaURL)
 
             const conteudoEmail = {
                 service_id: `${process.env.SERVICE_ID}`,
@@ -61,35 +48,6 @@ class UsuarioController {
         }
     }
 
-
-    async list(req, res) {
-        try {
-<<<<<<< HEAD
-            const usuarios = await Usuario.findAll({
-                include: {
-                    model: Turma,
-                    attributes: ['nome'],
-                },
-            });
-            res.json(usuarios);
-
-        } catch (error) {
-            res.json({ error: error });
-=======
-            var query = "select u.id, u.login, t.Nome from usuarios as u left join turmas as t on t.id = u.turma_id "
-      
-            const usuarios = await connection.query(query, {raw:true})
-            console.log(usuarios)
-
-            res.status(200).json(usuarios);
-
-        } catch (error) {
-          
-            res.status(500).json({ error: error });
->>>>>>> 51c6b9a5e923b4e55d790119af54670a21c864a0
-        }
-    }
-
     async update(req, res) {
         try {
             await Usuario.update(
@@ -105,15 +63,27 @@ class UsuarioController {
                     }
                 }
             );
-<<<<<<< HEAD
+
             res.json({ message: "Os Dados Foram Atualizados com Sucesso." });
-=======
+
             res.status(200).json({ message: "Os Dados Foram Atualizados com Sucesso." });
->>>>>>> 51c6b9a5e923b4e55d790119af54670a21c864a0
 
         } catch (error) {
-            console.log(error);
             res.json({ error: error });
+        }
+    }
+    
+    async list(req, res) {
+        try {
+            const usuarios = await Usuario.findAll({
+                include: {
+                    model: Turma,
+                    attributes: ['nome'],
+                },
+            });
+            res.status(200).json(usuarios);
+        } catch (error) {
+            res.status(500).json({ error: error.message }); 
         }
     }
 

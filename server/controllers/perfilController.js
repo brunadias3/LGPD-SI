@@ -9,8 +9,6 @@ class PerfilController {
             const texDes = CryptoJS.AES.decrypt(texCif, chave);
             const IdDes = texDes.toString(CryptoJS.enc.Utf8);
 
-            // res.json(IdDes)
-
             const perfil = await Perfil.create({
                 cpf: req.body.cpf,
                 email: req.body.email,
@@ -67,7 +65,6 @@ class PerfilController {
             res.json({ message: "Os Dados Foram Atualizados com Sucesso." })
 
         } catch (error) {
-            console.log(error)
             res.json({ error: error })
         }
     }
