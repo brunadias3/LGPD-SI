@@ -38,9 +38,7 @@ function EditarTurma() {
     }
 
     function getTurmas() {
-
         const descricaoTurma = document.getElementById('descricaoTurma');
-
         if (id) {
             let url = `http://localhost:3000/team/get/${id}`
             fetch(url, {

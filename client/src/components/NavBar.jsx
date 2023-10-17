@@ -1,9 +1,26 @@
 
-import React, { useState } from 'react'
-import { MdOutlineCancel } from 'react-icons/md';
+import React, { useState, useEffect } from 'react'
+
 
 function NavBar() {
     const [isChecked, setIsChecked] = useState(false)
+    //const { id } = useParams();
+    const id = 1
+    const [perfil, setPerfil] = useState()
+    function getPerfil() {
+        if (id) {
+            let url = `http://localhost:3000/profile/getOne/${id}`
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                }
+            }).then((resposta) => resposta.json()).then((data) => {
+                setPerfil(data)
+            })
+        }
+    }
+    useEffect(() => { getPerfil() }, [])
 
     return (
         <>
@@ -41,8 +58,9 @@ function NavBar() {
                                         <button
                                             type="button"
                                             className=" text-xl rounded-lg p-3 hover:bg-light-gray  text-gray-200"
+                                            onClick={() => { window.location.href = "/editar-perfil/" + id }}
                                         >
-                                            Edidar Perfil
+                                            Editar Perfil
                                         </button>
                                     </div>
                                 </div>
@@ -68,9 +86,9 @@ function NavBar() {
                             {/* <li>
                                 <a onClick={() => window.location.href = "/gerenciar-usuarios"} className="cursor-pointer block py-2 pl-3 pr-4  rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 text-white hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Gerenciar Usuários</a>
                             </li> */}
-                           
+
                             <li>
-                                <a onClick={() => window.location.href = "/cadastro-perfil"} className= "cursor-pointer block py-2 pl-3 pr-4  rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 text-white hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Cadastro de perfils</a>
+                                <a onClick={() => window.location.href = "/cadastro-perfil"} className="cursor-pointer block py-2 pl-3 pr-4  rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 text-white hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Cadastro de perfils</a>
                             </li>
                             {/* <li>
                                 <a onClick={() => window.location.href = "/gerenciar-turma"} className= "cursor-pointer block py-2 pl-3 pr-4  rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 text-white hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Gerenciamento de turmas</a>

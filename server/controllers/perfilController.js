@@ -41,6 +41,14 @@ class PerfilController {
         }
     }
 
+    async listOne(req, res){
+        const id = parseInt(req.params.id)
+        const perfil = await Perfil.findOne({ where: { id: id } }).catch((e) => {
+            return { error: "Identificador inválido" }
+        })
+        return res.json(perfil);
+    }
+
     async update(req, res) {
         try {
             await Perfil.update({
