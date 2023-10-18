@@ -9,6 +9,7 @@ import EditarTurma from './pages/turmas/EditarTurma';
 import GerenciarUsuarios from './pages/usuarios/GerenciarUsuarios';
 import ListarUsuario from './pages/usuarios/listarUsuario';
 import Home from './pages/Home';
+import Login from './pages/login';
 import EditarPerfil from './pages/perfil/EditarPerfil';
 
 function App() {
@@ -19,7 +20,8 @@ function App() {
       <BrowserRouter>
         <NavBar />
         <Routes>
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={<Login />} />
+          <Route path='/home' element={<Home />} />
           <Route path='/cadastro' element={<CadastroUsuario />} />
           <Route path='/cadastro-perfil' element={<CadastrarPerfil />} />
           <Route path='/cadastro-turma' element={<CasdastroTurma />} />
