@@ -20,18 +20,6 @@ const Aluno = connection.define('aluno', {
             }
         }
     },
-    email: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-            isEmail: {
-                msg: 'O campo Email deve conter @ e .com. '
-            },
-            notNull: {
-                msg: 'O campo Email é obrigatório.'
-            }
-        }
-    },
     rg: {
         type: Sequelize.STRING,
         unique: true,

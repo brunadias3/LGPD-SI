@@ -4,6 +4,7 @@ import CryptoJS from "crypto-js"
 class ResponsavelController {
     async create(req, res) {
         try {
+
             const chave = process.env.CHAVE;
             const texCif = decodeURIComponent(req.params.cp);
             const texDes = CryptoJS.AES.decrypt(texCif, chave);
@@ -16,6 +17,7 @@ class ResponsavelController {
                 data_nac: req.body.data_nac,
                 nome: req.body.nome,
                 usuario_id: IdDes
+                
             });
 
             res.json(responsavel);

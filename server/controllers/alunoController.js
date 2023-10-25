@@ -5,7 +5,6 @@ class AlunoController {
         try {
             const aluno = await Aluno.create({
                 cpf: req.body.cpf,
-                email: req.body.email,
                 rg: req.body.rg,
                 data_nac: req.body.data_nac,
                 nome: req.body.nome,
@@ -45,7 +44,6 @@ class AlunoController {
         try {
             await Aluno.update({
                 cpf: req.body.cpf,
-                email: req.body.email,
                 rg: req.body.rg,
                 data_nac: req.body.data_nac,
                 nome: req.body.nome,
