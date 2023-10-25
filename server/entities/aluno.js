@@ -1,9 +1,9 @@
 import { Sequelize } from "sequelize";
 import connection from "../connection/index.js";
-import Usuario from "./usuario.js";
+import Responsavel from "./responsavel.js";
+import Turma from './turma.js';
 
-
-const Perfil = connection.define('perfils', {
+const Aluno = connection.define('aluno', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -28,7 +28,7 @@ const Perfil = connection.define('perfils', {
                 msg: 'O campo Email deve conter @ e .com. '
             },
             notNull: {
-                msg: 'O campo Email não pode é obrigatório.'
+                msg: 'O campo Email é obrigatório.'
             }
         }
     },
@@ -61,48 +61,54 @@ const Perfil = connection.define('perfils', {
             }
         }
     },
+    status: {
+        type: Sequelize.STRING,
+        defaultValue: 'ativo',
+        allowNull: false
+    },
+    createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        isDate: true
+    },
+    updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        isDate: true
+    },
 
-    cpf_res: {
-        type: Sequelize.STRING
+    turma_id: {
+        type: Sequelize.INTEGER,
+        references: {
+            model: Turma,
+            key: 'id'
+        },
+        validate: {
+            isInt: {
+                msg: 'O campo Turma id deve ser um número inteiro.'
+            }
+        }
     },
-    email_res: {
-        type: Sequelize.STRING
-    },
-    rg_res: {
-        type: Sequelize.STRING
-    },
-    data_nac_res: {
-        type: Sequelize.DATE
-    },
-    nome_res: {
-        type: Sequelize.STRING
-    },
-
-    usuario_id: {
+    responsavel_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         unique: true,
         references: {
-            model: Usuario,
+            model: Responsavel,
             key: 'id'
-        }
-    }
-    },{
-    validate: {
-        validacaIdade() {
-            if (this.data_nac) {
-                const hoje = new Date();
-                const idade = hoje.getFullYear() - this.data_nac.getFullYear();
-
-                if (idade < 18) {
-                    if (!this.cpf_res || !this.email_res || !this.rg_res || !this.data_nac_res || !this.nome_res) {
-                        throw new Error('Os Campos do responsavel são obrigatórios.');
-                    }
-                }
+        },
+        validate: {
+            isInt: {
+                msg: 'O campo Responsavel id deve ser um número inteiro.'
+            },
+            notNull: {
+                msg: 'O campo Responsavel id é obrigatório.'
             }
         }
     }
+
+
 });
 
 
-export default Perfil;
+export default Aluno;

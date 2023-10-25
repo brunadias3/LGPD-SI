@@ -1,13 +1,15 @@
 import express from "express";
 import usuario from "./usuario.js";
-import perfil from "./perfil.js";
 import turma from "./turma.js"
+import responsavel from "./responsavel.js";
+import aluno from "./aluno.js";
 
 const routes = express.Router();
 
 routes.use("/user", usuario);
-routes.use("/profile",perfil);
+routes.use("/responsible",responsavel);
 routes.use("/team",turma);
+routes.use("/student", aluno);
 
 routes.use((req, res) => res.status(404).json({ error: "Rota não encontrada" }));
 

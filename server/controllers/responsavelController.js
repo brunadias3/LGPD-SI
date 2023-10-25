@@ -1,7 +1,7 @@
-import Perfil from "../entities/perfil.js";
+import Responsavel from "../entities/responsavel.js";
 import CryptoJS from "crypto-js"
 
-class PerfilController {
+class ResponsavelController {
     async create(req, res) {
         try {
             const chave = process.env.CHAVE;
@@ -9,21 +9,16 @@ class PerfilController {
             const texDes = CryptoJS.AES.decrypt(texCif, chave);
             const IdDes = texDes.toString(CryptoJS.enc.Utf8);
 
-            const perfil = await Perfil.create({
+            const responsavel = await Responsavel.create({
                 cpf: req.body.cpf,
                 email: req.body.email,
                 rg: req.body.rg,
                 data_nac: req.body.data_nac,
                 nome: req.body.nome,
-                cpf_res: req.body.cpf_res,
-                email_res: req.body.email_res,
-                rg_res: req.body.rg_res,
-                data_nac_res: req.body.data_nac_res,
-                nome_res: req.body.nome_res,
                 usuario_id: IdDes
             });
 
-            res.json(perfil);
+            res.json(responsavel);
 
         } catch (error) {
             res.json({ error: error });
@@ -33,8 +28,8 @@ class PerfilController {
 
     async list(req, res) {
         try {
-            const perfis = await Perfil.findAll()
-            res.json(perfis)
+            const responsavel = await Responsavel.findAll()
+            res.json(responsavel)
 
         } catch (error) {
             res.json({ error: error })
@@ -43,26 +38,20 @@ class PerfilController {
 
     async listOne(req, res){
         const id = parseInt(req.params.id)
-        const perfil = await Perfil.findOne({ where: { id: id } }).catch((e) => {
+        const responsavel = await responsavel.findOne({ where: { id: id } }).catch((e) => {
             return { error: "Identificador inválido" }
         })
-        return res.json(perfil);
+        return res.json(responsavel);
     }
 
     async update(req, res) {
         try {
-            await Perfil.update({
+            await Responsavel.update({
                 cpf: req.body.cpf,
                 email: req.body.email,
                 rg: req.body.rg,
                 data_nac: req.body.data_nac,
                 nome: req.body.nome,
-
-                cpf_res: req.body.cpf_res,
-                email_res: req.body.email_res,
-                rg_res: req.body.rg_res,
-                data_nac_res: req.body.data_nac_res,
-                nome_res: req.body.nome_res,
                 usuario_id: req.body.usuario_id
             },
                 {
@@ -77,21 +66,5 @@ class PerfilController {
         }
     }
 
-    // async delete(req, res) {
-    //     try {
-    //         await Perfil.destroy({
-    //             where: {
-    //                 id: req.params.id
-    //             }
-    //         })
-    //         res.status(201).json({ message: "Perfil Removido" })
-
-    //     } catch (error) {
-    //         res.status(500).json({ error: error })
-    //     }
-    // }
-
-
-
-
-} export default new PerfilController()
+ 
+} export default new ResponsavelController()

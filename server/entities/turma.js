@@ -20,6 +20,16 @@ const Turma = connection.define('turmas', {
     },
     descricao: {
         type: Sequelize.STRING
+    },
+    createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        isDate: true
+    },
+    updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        isDate: true
     }
 
 });

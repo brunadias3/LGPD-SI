@@ -1,9 +1,11 @@
 import UsuarioController from "./usuarioController.js";
-import PerfilController from "./perfilController.js"
+import ResponsavelController from "./responsavelController.js"
 import TurmaController from "./turmaController.js";
+import AlunoController from "./alunoController.js";
 
 export{
     UsuarioController,
-    PerfilController,
-    TurmaController
+    ResponsavelController,
+    TurmaController,
+    AlunoController
 };

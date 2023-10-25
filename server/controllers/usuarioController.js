@@ -1,16 +1,29 @@
-import Turma from "../entities/turma.js";
 import Usuario from "../entities/usuario.js";
 import CryptoJS from "crypto-js"
 
+function getPassword() {
+    var chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJLMNOPQRSTUVWXYZ!@#$";
+    var passwordLength = 8;
+    var password = "";
+
+    for (var i = 0; i < passwordLength; i++) {
+      var randomNumber = Math.floor(Math.random() * chars.length);
+      password += chars.substring(randomNumber, randomNumber + 1);
+    }
+    return password;
+  }
+
 class UsuarioController {
+
     async create(req, res) {
         try {
+            const senhaAleatoria = getPassword();
+
             const usuario = await Usuario.create({
 
                 login: req.body.login,
                 tipo_usuario: req.body.tipo_usuario,
-                senha: req.body.senha,
-                turma_id: req.body.turma_id
+                senha: senhaAleatoria
             });
 
             const chave = process.env.CHAVE;
@@ -24,7 +37,8 @@ class UsuarioController {
                 user_id: `${process.env.PUBLIC_KEY}`,
                 template_params: {
                     email: req.body.login,
-                    link: `http://localhost:3000/profile/create/${valorSeguroParaURL}`
+                    link: `http://localhost:3000/responsible/create/${valorSeguroParaURL}`,
+                    senha: senhaAleatoria
                 }
             };
 
@@ -54,8 +68,7 @@ class UsuarioController {
                 {
                     login: req.body.login,
                     tipo_usuario: req.body.tipo_usuario,
-                    senha: req.body.senha,
-                    turma_id: req.body.turma_id
+                    senha: req.body.senha
                 },
                 {
                     where: {
@@ -75,36 +88,13 @@ class UsuarioController {
     
     async list(req, res) {
         try {
-            const usuarios = await Usuario.findAll({
-                include: {
-                    model: Turma,
-                    attributes: ['nome'],
-                },
-            });
+            const usuarios = await Usuario.findAll();
             res.status(200).json(usuarios);
         } catch (error) {
             res.status(500).json({ error: error.message }); 
         }
     }
 
-    async status(req, res) {
-        try {
-            const usuario = await Usuario.findByPk(req.params.id);
-
-            if (!usuario) {
-                return res.json({ message: "Usuário não encontrado" });
-            }
-
-            usuario.status = req.body.status;
-            await usuario.save();
-
-            res.json({ message: "Usuário desativado" });
-
-
-        } catch (error) {
-            res.json({ error: error });
-        }
-    }
 
     //     async delete(req, res) {
     //         try {
