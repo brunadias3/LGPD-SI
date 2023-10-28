@@ -11,6 +11,8 @@ import ListarUsuario from './pages/usuarios/listarUsuario';
 import Home from './pages/Home';
 import Login from './pages/login';
 import EditarPerfil from './pages/perfil/EditarPerfil';
+import CadastrarAluno from './pages/alunos/criarAluno';
+import CadastrarResponsavel from './pages/responsavel/criarResponsavel';
 
 function App() {
 
@@ -23,7 +25,7 @@ function App() {
           <Route path='/' element={<Login />} />
           <Route path='/home' element={<Home />} />
           <Route path='/cadastro' element={<CadastroUsuario />} />
-          <Route path='/cadastro-perfil' element={<CadastrarPerfil />} />
+          <Route path='/cadastro-perfil' element={<CadastrarResponsavel />} />
           <Route path='/cadastro-turma' element={<CasdastroTurma />} />
           <Route path='/gerenciar-turma' element={<GerenciarTrumas />} />
           <Route path='/gerenciar-usuarios' element={<GerenciarUsuarios />} />
@@ -31,6 +33,7 @@ function App() {
           <Route path='/editar-turma/:id' element={<EditarTurma />} />
           <Route path='/listar-usuarios' element={<ListarUsuario />} />
           <Route path='/editar-perfil/:id' element={<EditarPerfil />} />
+          <Route path='/cadastrar-aluno' element={<CadastrarAluno />} />
         </Routes>
       </BrowserRouter>
     </>
