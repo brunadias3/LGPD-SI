@@ -87,12 +87,7 @@ function NavBar() {
                                 <a onClick={() => window.location.href = "/cadastar-aluno"} className="cursor-pointer block py-2 pl-3 pr-4  rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 text-white hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Cadastrar Aluno</a>
                             </li>
 
-                            {/* <li>
-                                <a onClick={() => window.location.href = "/cadastro-perfil"} className="cursor-pointer block py-2 pl-3 pr-4  rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 text-white hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Cadastro de perfils</a>
-                            </li> */}
-                            {/* <li>
-                                <a onClick={() => window.location.href = "/gerenciar-turma"} className= "cursor-pointer block py-2 pl-3 pr-4  rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 text-white hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Gerenciamento de turmas</a>
-                            </li> */}
+                          
                         </ul>
                     </div>
                 </div>

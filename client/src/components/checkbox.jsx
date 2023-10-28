@@ -1,5 +1,5 @@
 import React from 'react'
-import "../pages/responsavel/criarResponsavel.css"
+import "../pages/perfil/criarResponsavel.css"
 
 export default function CheckBoxTermo({ textoTermo, redirecionamento }) {
     return (
