@@ -1,0 +1,8 @@
+.linkTermo{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.linkTermo:hover{
+color: blue;
+}
