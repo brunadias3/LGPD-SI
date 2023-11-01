@@ -2,49 +2,55 @@ import Header from "../../components/Header";
 import Campo from "../../components/Campo";
 import { useState, useEffect } from "react";
 import CheckBoxTermo from "../../components/checkbox";
+import { useParams, useNavigate } from "react-router-dom";
+
+
+
 
 function CadastrarPerfil() {
 
+    const {cp} =  useParams();
     const [senhaUsu, setSenhaUsu] = useState("")
     const [dataNascUsu, setDataNascUsu] = useState("")
     const [cpfResponsalve, setCpfResponsavel] = useState('')
     const [emailResponsavel, setEmailResponsavel] = useState('')
     const [rgResponsavel, setRgResponsavel] = useState('')
     const [nomeResponsavel, setNomeResponsavel] = useState('')
-
+    const navigate = useNavigate()
 
 
 
     function CadastrarUsu() {
+        console.log(cp)
 
 
-        const dataNasc = document.getElementById('dataNasc');
-        const emailResp = document.getElementById("emailResp");
-        const nomeResp = document.getElementById("nomeResp");
-        const rgResp = document.getElementById("rgResp");
-        const cpfResp = document.getElementById("cpfResp");
-
-
-        let url = 'http://localhost:3000/responsible/create'
+        let url = 'http://localhost:3000/responsible/create/'
+      
+       
         fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },
             body: JSON.stringify({
-                cpf: cpfResp.value,
-                emailResp: emailResp.value,
-                rg: rgResp.value,
-                data_nac: dataNasc.value,
-                nome: nomeResp.value
+                cpf: cpfResponsalve,
+                email: emailResponsavel,
+                rg: rgResponsavel,
+                data_nac: dataNascUsu,
+                nome: nomeResponsavel,
+                senha:senhaUsu,
+                cp:cp
 
             })
         }).then((resp) => resp.json()).then((data) => {
+            console.log("data",data)
 
             if (data.error) {
-                alert("Fudeu")
+                alert("ERRO:"+ data.error)
             } else {
-                alert("Foi")
+                alert("SUCESSO!")
+                navigate('/')
+
             }
 
         })

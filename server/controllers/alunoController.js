@@ -1,20 +1,27 @@
 import Aluno from "../entities/aluno.js";
+import Responsavel from "../entities/responsavel.js";
+import Usuario from "../entities/usuario.js";
 
 class AlunoController {
     async create(req, res) {
+        const responsavel = await Responsavel.findOne({ where: { usuario_id: req.body.id } }).catch((e) => {
+            return { error: "Responsável não encontrado Identificador inválido" }
+        })
+        console.log(responsavel)
         try {
             const aluno = await Aluno.create({
                 cpf: req.body.cpf,
                 rg: req.body.rg,
                 data_nac: req.body.data_nac,
                 nome: req.body.nome,
-                responsavel_id: req.body.responsavel_id
+                responsavel_id: responsavel.dataValues.id
                 
             });
 
             res.json(aluno);
 
         } catch (error) {
+            console.log(error)
             res.json({ error: error });
         }
     }
@@ -22,8 +29,19 @@ class AlunoController {
 
     async list(req, res) {
         try {
-            const aluno = await Aluno.findAll()
-            res.json(aluno)
+            const responsavel = await Responsavel.findOne({ where: { usuario_id: req.params.id } }).catch((e) => {
+                return { error: "Responsável não encontrado Identificador inválido" }
+            })
+            const usuario = Usuario.findOne({where:{id: req.params.id}})
+            if(usuario.tipo_usuario == 1){
+                const aluno = await Aluno.findAll({where:{responsavel_id:responsavel.id}})
+                res.json(aluno)
+
+            }else{
+                const aluno = await Aluno.findAll()
+                res.json(aluno)
+
+            }
 
         } catch (error) {
             res.json({ error: error })
@@ -32,7 +50,7 @@ class AlunoController {
 
     async listOne(req, res){
         const id = parseInt(req.params.id)
-        const aluno = await aluno.findOne({ where: { id: id } }).catch((e) => {
+        const aluno = await Aluno.findOne({ where: { id: id } }).catch((e) => {
             return { error: "Identificador inválido" }
         })
         return res.json(aluno);
@@ -47,7 +65,6 @@ class AlunoController {
                 rg: req.body.rg,
                 data_nac: req.body.data_nac,
                 nome: req.body.nome,
-                responsavel_id: req.body.responsavel_id
             },
                 {
                     where: {

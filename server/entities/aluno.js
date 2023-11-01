@@ -80,7 +80,7 @@ const Aluno = connection.define('aluno', {
     responsavel_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        unique: true,
+        unique: false,
         references: {
             model: Responsavel,
             key: 'id'

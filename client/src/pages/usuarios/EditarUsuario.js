@@ -1,73 +1,72 @@
 import Header from "../../components/Header";
 import Campo from "../../components/Campo";
-import { useState, useEffect, useContext } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { GlobalContext } from "../../Context/ContextProvider";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
-function EditarPerfil() {
+function EditarUsuario() {
+    const { id } = useParams();
     const [emailUsu, setEmailUsu] = useState("")
-    const [senhaUsu, setSenhaUsu] = useState("")
-    const [senhaUsuConfirma, setSenhaUsuConfirma] = useState("")
     const [dataNascUsu, setDataNascUsu] = useState("")
     const [nomeUsu, setNomeUsu] = useState("")
     const [rgUsu, setRgUsu] = useState("")
     const [cpfUsu, setCpfUsu] = useState("")
-    const {user}= useContext(GlobalContext)
     const navigate = useNavigate()
+  
 
     function getUser() {
-       if(user == null){
-        navigate("/")
-
-       }
-        let url = `http://localhost:3000/responsible/getOne/${user.id}`
+        console.log(id)
+        let url = `http://localhost:3000/responsible/getOne/${id}`
         fetch(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             }
         }).then((resposta) => resposta.json()).then((data) => {
+            if(data.error){
+                return
+            }
+            console.log(data)
             setNomeUsu(data.nome)
             setEmailUsu(data.email)
             setRgUsu(data.rg)
             setCpfUsu(data.cpf)
-            var partesData = data.data_nac.split("T")[0];
+            var partesData = data.data_nac.split('T')[0]
             setDataNascUsu(partesData)
 
         })
     }
     function EditarUsu() {
-        let dados = {
-            
-            cpf: cpfUsu,
-            email: emailUsu,
-            rg: rgUsu,
-            data_nac: dataNascUsu,
-            nome: nomeUsu,
-            senha: senhaUsu == ""? null : senhaUsu
-        }
-        
+                let data = {
+                    usuario_id: id,
+                    cpf: cpfUsu,
+                    email: emailUsu,
+                    rg: rgUsu,
+                    data_nac: dataNascUsu,
+                    nome: nomeUsu
+                }
 
-        let url = `http://localhost:3000/responsible/update/${user.id}`
+
+        let url = `http://localhost:3000/responsible/update/${id}`
         fetch(url, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },
-            body: JSON.stringify(dados)
+            body: JSON.stringify(data)
         }).then((resp) => resp.json()).then((data) => {
 
             if (data.error) {
-                alert("ERRO: "+ data.error)
+                alert("ERRO: "+data.error)
             } else {
                 alert("SUCESSO!")
-                navigate('/home')
+                navigate("/listar-usuarios")
             }
 
         })
 
     }
-    
+   
+
     useEffect(() => { getUser() }, [])
   
     return (
@@ -80,9 +79,8 @@ function EditarPerfil() {
             <Campo text={"E-mail institucional"} id={"emailInst"} placeholder={"Digite o e-mail"} type={"email"} value={emailUsu} setValue={setEmailUsu} />
             <Campo text={"Data de nascimento"} id={"dataNasc"} type={"date"} value={dataNascUsu} setValue={setDataNascUsu} />
 
+      
 
-            <Campo text={"Atualize a senha"} id={"senhaUsu"} placeholder={"Senha do usuário"} type={"password"} value={senhaUsu} setValue={setSenhaUsu} />
-            <Campo text={"Confirme a senha"} id={"senhaUsuConfirma"} placeholder={"Digite novamente a senha"} type={"password"} value={senhaUsuConfirma} setValue={setSenhaUsuConfirma} />
 
             <div className="mt-5 mb-5 flex items-center justify-center" >
                 <button
@@ -97,4 +95,4 @@ function EditarPerfil() {
     )
 }
 
-export default EditarPerfil
+export default EditarUsuario

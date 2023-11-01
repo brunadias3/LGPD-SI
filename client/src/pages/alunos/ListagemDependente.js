@@ -1,13 +1,56 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Header from "../../components/Header";
+import { useNavigate } from "react-router-dom";
+import { GlobalContext } from "../../Context/ContextProvider";
 
 
 function ListarDependente() {
-    const headers = ["Nome", "Editar"]
+    
+    const [alunos, setAlunos] = useState([])
+    const navigate = useNavigate()
+    const {user} = useContext(GlobalContext)
+    const headers = user && user.tipo_usuario == 1?["Nome", "Editar"]:["Nome"]
   
     const usuarios = [
         {nome: 'Antonio'}
     ]
+
+   
+        
+    
+        function getUsuario() {
+            if(user == null){
+                navigate("/")
+                
+            }
+            let url = 'http://localhost:3000/student/list/'+user.id
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                }
+            }).then((resposta) => resposta.json()).then((data) => {
+                console.log(data);
+                if(data.error){
+                    console.log('error')
+                    return
+                }
+                var dependentes = []
+                data.map(element => {
+    
+                    dependentes.push({
+                        id: element.id,
+                        nome: element.nome,
+                    })
+                
+                });
+                setAlunos(dependentes)
+            })
+        }
+        useEffect(()=>{
+            getUsuario()
+
+        },[])
 
 
     return (
@@ -25,17 +68,17 @@ function ListarDependente() {
                         </tr>
                     </thead>
                     <tbody>
-                        {usuarios.map(dat => {
+                        {alunos.map(dat => {
                             return (
                                 <tr key={dat.id} className="bg-white hover:bg-gray-50 dark:hover:bg-gray-300 content-center">
                                     <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-gray">
                                         {dat.nome}
                                     </td>
                                    
-
+                                    {user && user.tipo_usuario == 1?
                                     <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-gray">
-                                        <button onClick={() => window.location.href = "/cadastro-dependente"} className="bg-gray-900  hover:bg-gray-800 text-white font-bold py-2 px-4 rounded inline-flex items-center right-20">Atualizar</button>
-                                    </td>
+                                        <button onClick={() => navigate("/editar-dependente/"+dat.id)} className="bg-gray-900  hover:bg-gray-800 text-white font-bold py-2 px-4 rounded inline-flex items-center right-20">Atualizar</button>
+                                    </td>:""}
                                     <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-gray">
 
                                       

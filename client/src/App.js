@@ -14,19 +14,24 @@ import EditarPerfil from './pages/perfil/EditarPerfil';
 import CadastrarDependente from './pages/alunos/CadastroDependente';
 import GerenciarAluno from './pages/alunos/GerenciarAluno';
 import ListarDependente from './pages/alunos/ListagemDependente';
+import GlobalProvider from './Context/ContextProvider';
+import EditarUsuario from './pages/usuarios/EditarUsuario';
+import EditarDependente from './pages/alunos/EditarDependente';
+
 
 function App() {
 
 
   return (
     <>
+    <GlobalProvider>
       <BrowserRouter>
         <NavBar />
         <Routes>
           <Route path='/' element={<Login />} />
           <Route path='/home' element={<Home />} />
           <Route path='/cadastro' element={<CadastroUsuario />} />
-          <Route path='/cadastro-perfil' element={<CadastrarPerfil />} />
+          <Route path='/cadastro-perfil/:cp' element={<CadastrarPerfil />} />
           <Route path='/cadastro-turma' element={<CasdastroTurma />} />
           <Route path='/gerenciar-turma' element={<GerenciarTrumas />} />
           <Route path='/gerenciar-usuarios' element={<GerenciarUsuarios />} />
@@ -34,12 +39,16 @@ function App() {
           <Route path='/editar-turma/:id' element={<EditarTurma />} />
           <Route path='/listar-usuarios' element={<ListarUsuario />} />
           <Route path='/editar-perfil/:id' element={<EditarPerfil />} />
+          <Route path='/editar-usuario/:id' element={<EditarUsuario />} />
           <Route path='/cadastro-dependente' element={<CadastrarDependente />} />
           <Route path='/listar-dependente' element={<ListarDependente />}/>
+          <Route path='/editar-dependente/:id' element={<EditarDependente />}/>
+
         
           <Route path='/gerenciar-aluno' element={<GerenciarAluno />} />
         </Routes>
       </BrowserRouter>
+      </GlobalProvider>
     </>
   );
 }

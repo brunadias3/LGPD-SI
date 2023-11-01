@@ -1,16 +1,21 @@
 import Responsavel from "../entities/responsavel.js";
+import Usuario from "../entities/usuario.js";
 import CryptoJS from "crypto-js"
+import * as bcrypt from "bcrypt";
 
 class ResponsavelController {
     async create(req, res) {
         try {
 
+            console.log("kerelhoooooon")
             const chave = process.env.CHAVE;
-            const texCif = decodeURIComponent(req.params.cp);
+            const texCif = decodeURIComponent(req.body.cp);
             const texDes = CryptoJS.AES.decrypt(texCif, chave);
             const IdDes = texDes.toString(CryptoJS.enc.Utf8);
+            console.log("aaaaaaaaaaaa",IdDes)
 
             const responsavel = await Responsavel.create({
+
                 cpf: req.body.cpf,
                 email: req.body.email,
                 rg: req.body.rg,
@@ -19,10 +24,23 @@ class ResponsavelController {
                 usuario_id: IdDes
                 
             });
+            console.log("responsavel", responsavel)
+            var newPass = await bcrypt.hash(req.body.senha, 10)
+            console.log("bbbbbbbbbbbbbb")
+            await Usuario.update(
+                {
+                    senha: newPass
+                },
+                {
+                    where: {
+                        id: IdDes
+                    }
+                })
 
             res.json(responsavel);
 
         } catch (error) {
+            console.log(error)
             res.json({ error: error });
         }
     }
@@ -40,7 +58,7 @@ class ResponsavelController {
 
     async listOne(req, res){
         const id = parseInt(req.params.id)
-        const responsavel = await responsavel.findOne({ where: { id: id } }).catch((e) => {
+        const responsavel = await Responsavel.findOne({ where: { usuario_id: id } }).catch((e) => {
             return { error: "Identificador inválido" }
         })
         return res.json(responsavel);
@@ -54,13 +72,22 @@ class ResponsavelController {
                 rg: req.body.rg,
                 data_nac: req.body.data_nac,
                 nome: req.body.nome,
-                usuario_id: req.body.usuario_id
             },
                 {
                     where: {
-                        id: req.params.id
+                        usuario_id: req.params.id
                     }
                 })
+
+             if(req.body.senha){
+                await Usuario.update({
+                    senha:await bcrypt.hash(req.body.senha, 10)
+                }, {
+                    where:{
+
+                        id:req.params.id
+                }})
+             }   
             res.json({ message: "Os Dados Foram Atualizados com Sucesso." })
 
         } catch (error) {

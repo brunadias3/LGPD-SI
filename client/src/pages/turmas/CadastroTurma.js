@@ -1,11 +1,12 @@
 import Header from "../../components/Header";
 import Campo from "../../components/Campo";
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 
 function CasdastroTurma() {
 
     const [nomeTurma, setNomeTurma] = useState('');
+    const navigate = useNavigate()
 
 
     function cadastrarTurma() {
@@ -23,9 +24,12 @@ function CasdastroTurma() {
         }).then((resp) => resp.json()).then((data) => {
 
             if (data.error) {
-                alert("Fudeu")
+                alert("ERRO:" + data.error)
             } else {
-                alert("Foi")
+                alert("SUCESSO!")
+                    navigate('/listar-turmas')
+
+            
             }
 
         })

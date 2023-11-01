@@ -37,7 +37,7 @@ class UsuarioController {
                 user_id: `${process.env.PUBLIC_KEY}`,
                 template_params: {
                     email: req.body.login,
-                    link: `http://localhost:3000/responsible/create/${valorSeguroParaURL}`,
+                    link: `http://localhost:3001/cadastro-perfil/${valorSeguroParaURL}`,
                     senha: senhaAleatoria
                 }
             };

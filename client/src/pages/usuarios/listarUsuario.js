@@ -1,12 +1,19 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Header from "../../components/Header";
+import { useNavigate } from "react-router-dom";
+import { GlobalContext } from "../../Context/ContextProvider";
 
 
 function ListarUsuario() {
     const headers = ["E-mail", "Editar"]
     const [usuarios, setUsuarios] = useState([])
+    const navigate = useNavigate()
+    const {user} = useContext(GlobalContext)
 
     function getUsuario() {
+        if(user == null){
+            navigate("/")
+        }
         let url = 'http://localhost:3000/user/list'
         fetch(url, {
             method: 'GET',
@@ -17,11 +24,16 @@ function ListarUsuario() {
             console.log(data);
             var usuarios = []
             data.map(element => {
+                if(element.id !== user.id){
+                    usuarios.push({
+                        id: element.id,
+                        email: element.login,
+                    })
 
-                usuarios.push({
-                    id: element.id,
-                    email: element.login,
-                })
+                }
+
+
+              
             
             });
             setUsuarios(usuarios)
@@ -75,7 +87,7 @@ function ListarUsuario() {
                                    
 
                                     <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-gray">
-                                        <button onClick={() => window.location.href = "/cadastro-perfil"} className="bg-gray-900  hover:bg-gray-800 text-white font-bold py-2 px-4 rounded inline-flex items-center right-20">Atualizar</button>
+                                        <button onClick={() => navigate("/editar-usuario/"+dat.id)} className="bg-gray-900  hover:bg-gray-800 text-white font-bold py-2 px-4 rounded inline-flex items-center right-20">Atualizar</button>
                                     </td>
                                     <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-gray">
 

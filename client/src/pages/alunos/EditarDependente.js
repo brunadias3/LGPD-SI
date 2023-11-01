@@ -2,9 +2,11 @@ import Header from "../../components/Header";
 import Campo from "../../components/Campo";
 import { useState, useEffect, useContext } from "react";
 import { GlobalContext } from "../../Context/ContextProvider";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-function CadastrarDependente() {
+function EditarDependente() {
+    const {id} = useParams()
+    const navihgate = useNavigate()
 
     
     const [dataNasc, setDataNasc] = useState("")
@@ -12,17 +14,16 @@ function CadastrarDependente() {
     const [rg, setRg] = useState('')
     const [nome, setNome] = useState('')
     const {user}= useContext(GlobalContext)
-    const navigate = useNavigate()
 
 
 
 
-    function CadastrarUsu(id) {
+    function EditarDep() {
 
 
-        let url = 'http://localhost:3000/student/create'
+        let url = 'http://localhost:3000/student/update/'+id
         fetch(url, {
-            method: 'POST',
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },
@@ -32,25 +33,48 @@ function CadastrarDependente() {
                 rg: rg,
                 data_nac: dataNasc,
                 nome: nome,
-                id:user.id
 
 
             })
         }).then((resp) => resp.json()).then((data) => {
-
+            console.log(data)
             if (data.error) {
-                console.log(data.error)
                 alert("ERRO: "+ data.error)
             } else {
                 alert("SUCESSO!")
-                navigate("/listar-dependente")
+                navihgate("/listar-dependente")
 
             }
 
         })
 
     }
+    function getDependente() {
+        console.log(id)
+        let url = `http://localhost:3000/student/getOne/${id}`
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            }
+        }).then((resposta) => resposta.json()).then((data) => {
+            console.log(data)
+            if( data == null || data.error){
+                alert("Dependente não encontrado")
+                return
+            }
+               
+  
+            setDataNasc(data.data_nac.split("T")[0])
+            setCpf(data.cpf)
+            setRg(data.rg)
+            setNome(data.nome)
 
+        })
+    }
+     useEffect(()=>{
+        getDependente()
+     },[])
 
 
 
@@ -67,9 +91,9 @@ function CadastrarDependente() {
             <div className="mt-5 mb-5 flex items-center justify-center" >
                 <button
                     className="bg-gray-900 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded-full"
-                    onClick={CadastrarUsu}
+                    onClick={EditarDep}
                 >
-                    Cadastrar
+                    Editar
                 </button>
             </div>
 
@@ -77,4 +101,4 @@ function CadastrarDependente() {
     )
 }
 
-export default CadastrarDependente
+export default EditarDependente
