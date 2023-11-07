@@ -1,10 +1,8 @@
 import Header from "../../components/Header";
 import Campo from "../../components/Campo";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import CheckBoxTermo from "../../components/checkbox";
 import { useParams, useNavigate } from "react-router-dom";
-
-
 
 
 function CadastrarPerfil() {
@@ -16,12 +14,15 @@ function CadastrarPerfil() {
     const [emailResponsavel, setEmailResponsavel] = useState('')
     const [rgResponsavel, setRgResponsavel] = useState('')
     const [nomeResponsavel, setNomeResponsavel] = useState('')
+    const [termosResponsavel, setTermosResponsavel] = useState('') 
+    const [privacidadeResponsavel, setPrivacidadeResponsavel] = useState('') 
+
     const navigate = useNavigate()
-
-
 
     function CadastrarUsu() {
         console.log(cp)
+        console.log("termosResponsavel:", termosResponsavel);
+        console.log("privacidadeResponsavel:", privacidadeResponsavel);
 
 
         let url = 'http://localhost:3000/responsible/create/'
@@ -39,6 +40,8 @@ function CadastrarPerfil() {
                 data_nac: dataNascUsu,
                 nome: nomeResponsavel,
                 senha:senhaUsu,
+                log_termos: termosResponsavel ? new Date() : null,
+                log_privacidade: privacidadeResponsavel ? new Date() : null,
                 cp:cp
 
             })
@@ -58,8 +61,6 @@ function CadastrarPerfil() {
     }
 
 
-
-
     return (
         <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl ">
 
@@ -71,8 +72,8 @@ function CadastrarPerfil() {
             <Campo text={"Data de nascimento"} id={"dataNasc"} type={"date"} value={dataNascUsu} setValue={setDataNascUsu} />
             <Campo text={"E-mail para contato"} id={"emailResp"} placeholder={"Digite o e-mail"} type={"email"} value={emailResponsavel} setValue={setEmailResponsavel} />
             <Campo text={"Digite sua senha"} id={"senhaUsu"} placeholder={"Digite novamente a senha"} type={"password"} value={senhaUsu} setValue={setSenhaUsu} />
-            <CheckBoxTermo redirecionamento={"http://localhost:8080/TERMOS.pdf"} textoTermo={"Termos e Condições de Uso"} />
-            <CheckBoxTermo redirecionamento={"http://localhost:8080/politica.pdf"} textoTermo={"Política de privacidade"} />
+            <CheckBoxTermo redirecionamento={"http://localhost:3000/TERMOS.pdf"} textoTermo={"Termos e Condições de Uso"} onChange={() => setTermosResponsavel(!termosResponsavel)}/>
+            <CheckBoxTermo redirecionamento={"http://localhost:3000/politica.pdf"} textoTermo={"Política de privacidade"} onChange={() => setPrivacidadeResponsavel(!privacidadeResponsavel)}/>
 
             <div className="mt-5 mb-5 flex items-center justify-center" >
                 <button

@@ -60,6 +60,16 @@ const Responsavel = connection.define('responsavel', {
             }
         }
     },
+    log_termos: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        isDate: true
+    },
+    log_privacidade: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        isDate: true
+    },
     createdAt: {
         type: Sequelize.DATE,
         allowNull: false,

@@ -12,6 +12,8 @@ class ResponsavelController {
             const texCif = decodeURIComponent(req.body.cp);
             const texDes = CryptoJS.AES.decrypt(texCif, chave);
             const IdDes = texDes.toString(CryptoJS.enc.Utf8);
+            
+    
             console.log("aaaaaaaaaaaa",IdDes)
 
             const responsavel = await Responsavel.create({
@@ -21,6 +23,8 @@ class ResponsavelController {
                 rg: req.body.rg,
                 data_nac: req.body.data_nac,
                 nome: req.body.nome,
+                log_termos: req.body.log_termos,
+                log_privacidade: req.body.log_privacidade,
                 usuario_id: IdDes
                 
             });
