@@ -72,8 +72,8 @@ function CadastrarPerfil() {
             <Campo text={"Data de nascimento"} id={"dataNasc"} type={"date"} value={dataNascUsu} setValue={setDataNascUsu} />
             <Campo text={"E-mail para contato"} id={"emailResp"} placeholder={"Digite o e-mail"} type={"email"} value={emailResponsavel} setValue={setEmailResponsavel} />
             <Campo text={"Digite sua senha"} id={"senhaUsu"} placeholder={"Digite novamente a senha"} type={"password"} value={senhaUsu} setValue={setSenhaUsu} />
-            <CheckBoxTermo redirecionamento={"http://localhost:3000/TERMOS.pdf"} textoTermo={"Termos e Condições de Uso"} onChange={() => setTermosResponsavel(!termosResponsavel)}/>
-            <CheckBoxTermo redirecionamento={"http://localhost:3000/politica.pdf"} textoTermo={"Política de privacidade"} onChange={() => setPrivacidadeResponsavel(!privacidadeResponsavel)}/>
+            <CheckBoxTermo redirecionamento={"http://localhost:8080/TERMOS.pdf"} textoTermo={"Termos e Condições de Uso"} onChange={() => setTermosResponsavel(!termosResponsavel)}/>
+            <CheckBoxTermo redirecionamento={"http://localhost:8080/politica.pdf"} textoTermo={"Política de privacidade"} onChange={() => setPrivacidadeResponsavel(!privacidadeResponsavel)}/>
 
             <div className="mt-5 mb-5 flex items-center justify-center" >
                 <button
