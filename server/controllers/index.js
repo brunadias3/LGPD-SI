@@ -8,4 +8,5 @@ export{
     ResponsavelController,
     TurmaController,
     AlunoController
+   
 };
