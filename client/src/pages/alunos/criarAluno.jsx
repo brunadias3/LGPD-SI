@@ -19,6 +19,7 @@ function CadastrarAluno() {
         let url = 'http://localhost:3000/profile/create'
         fetch(url, {
             method: 'POST',
+            credentials: "include",
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },

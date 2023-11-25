@@ -17,7 +17,7 @@ import ListarDependente from './pages/alunos/ListagemDependente';
 import GlobalProvider from './Context/ContextProvider';
 import EditarUsuario from './pages/usuarios/EditarUsuario';
 import EditarDependente from './pages/alunos/EditarDependente';
-
+import Sucess from './pages/sucess';
 
 function App() {
 
@@ -43,6 +43,8 @@ function App() {
           <Route path='/cadastro-dependente' element={<CadastrarDependente />} />
           <Route path='/listar-dependente' element={<ListarDependente />}/>
           <Route path='/editar-dependente/:id' element={<EditarDependente />}/>
+          <Route path='/sucess' element={<Sucess />}/>
+
 
         
           <Route path='/gerenciar-aluno' element={<GerenciarAluno />} />

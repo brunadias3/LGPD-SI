@@ -36,6 +36,7 @@ function EditarPerfil() {
         let url = `http://localhost:3000/responsible/getOne/${user.id}`
         fetch(url, {
             method: 'GET',
+            credentials: "include",
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             }
@@ -66,6 +67,7 @@ function EditarPerfil() {
         let url = `http://localhost:3000/responsible/update/${user.id}`
         fetch(url, {
             method: 'PATCH',
+            credentials: "include",
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },

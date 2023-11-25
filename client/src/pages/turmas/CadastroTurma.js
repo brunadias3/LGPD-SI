@@ -17,6 +17,7 @@ function CasdastroTurma() {
         let url = 'http://localhost:3000/team/create'
         fetch(url, {
             method: 'POST',
+            credentials: "include",
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },

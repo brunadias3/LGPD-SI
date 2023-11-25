@@ -9,5 +9,6 @@ export{
     ResponsavelController,
     TurmaController,
     AlunoController,
-    LoginController
+    LoginController,
+
 };

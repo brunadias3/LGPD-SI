@@ -24,6 +24,7 @@ function EditarDependente() {
         let url = 'http://localhost:3000/student/update/'+id
         fetch(url, {
             method: 'PATCH',
+            credentials: "include",
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },
@@ -54,6 +55,7 @@ function EditarDependente() {
         let url = `http://localhost:3000/student/getOne/${id}`
         fetch(url, {
             method: 'GET',
+            credentials: "include",
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             }

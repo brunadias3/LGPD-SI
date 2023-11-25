@@ -18,6 +18,7 @@ function EditarUsuario() {
         let url = `http://localhost:3000/responsible/getOne/${id}`
         fetch(url, {
             method: 'GET',
+            credentials: "include",
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             }
@@ -49,6 +50,7 @@ function EditarUsuario() {
         let url = `http://localhost:3000/responsible/update/${id}`
         fetch(url, {
             method: 'PATCH',
+            credentials: "include",
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },

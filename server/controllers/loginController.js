@@ -1,11 +1,13 @@
 import Usuario from "../entities/usuario.js";
 import * as bcrypt from "bcrypt";
 import {generateToken} from '../middlewares/index.js'
-
+import axios from 'axios'
 class LoginController {
 
     async login(req, res) {
         const { email, senha } = req.body;
+
+        
         console.log("aaaa", email, senha)
         try {
             const user = await Usuario.findOne({ where: { login: email } })
@@ -20,8 +22,9 @@ class LoginController {
 
             if (isPasswordValid) {
                 // Se a senha estiver correta, gerar um JWT e enviá-lo na resposta
-                // const token = await generateToken({ email });
-                // res.cookie("jwt", token);
+                const token = await generateToken({ email });
+                console.log(token)
+                res.cookie("jwt", token);
                 return res.json({ success: true, user: user});
             } else {
                 // Se a senha estiver incorreta, retornar uma mensagem de erro
@@ -35,32 +38,48 @@ class LoginController {
 
     async checkAuthentication(req, res){
         try {
-            let token = req.header("Authorization");
-
-            if (!token) {
-                // Se o token não estiver no header, verifique no cookie
-                token = req.cookies.jwt;
+         
+            if(req.user && req.user.id){
+             
+                const user = await Usuario.findOne({ where: { google_id: req.user.id } })
+                return res.json({ success: true, user: user});
+            }else{
+                return res.json({error:true})
             }
-
-            if (!token) {
-                return res.status(401).json({ error: "Token não fornecido" });
-            }
-
-            // Verifique o token JWT usando a função de autorização
-            authorization(req, res, (err) => {
-                if (err) {
-                    return res.status(401).json({ error: "Token inválido" });
-                }
-                return res.json({ success: true, user: res.locals });
-            });
         } catch (error) {
             return res.status(500).json({ error: "Erro ao verificar autenticação" });
         }
     }
 
     async logOut(req, res){
-        res.clearCookie("jwt");
-        return res.json({ success: true });
+        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+        console.log(req.cookies)
+        if(req.user){
+            let url = "https://oauth2.googleapis.com/revoke?token="+req.cookies.token
+            console.log(url)
+            try{
+                await axios.post(url,{},{
+                    
+                        headers: {'Content-type': "application/x-www-form-urlencoded"}
+                    }).then((data)=>{
+                        
+
+                    })
+                }catch(e){
+                    console.log(e)
+                }
+                    req.logOut()
+                    res.cookie("session", null)
+                    res.cookie('token', null)
+                    return res.json({ success: true });
+
+            }else{
+                res.cookie("jwt", null);
+                    return res.json({ success: true });
+
+            }
+
+        
     }
 
 }

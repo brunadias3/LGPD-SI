@@ -18,6 +18,7 @@ class ResponsavelController {
 
             const responsavel = await Responsavel.create({
 
+                id:0,
                 cpf: req.body.cpf,
                 email: req.body.email,
                 rg: req.body.rg,
@@ -25,21 +26,37 @@ class ResponsavelController {
                 nome: req.body.nome,
                 log_termos: req.body.log_termos,
                 log_privacidade: req.body.log_privacidade,
-                usuario_id: IdDes
+                usuario_id: IdDes,
+                
+                
                 
             });
-            console.log("responsavel", responsavel)
-            var newPass = await bcrypt.hash(req.body.senha, 10)
-            console.log("bbbbbbbbbbbbbb")
-            await Usuario.update(
-                {
-                    senha: newPass
-                },
-                {
-                    where: {
-                        id: IdDes
-                    }
-                })
+            if(req.body.usaSenha){
+                var newPass = await bcrypt.hash(req.body.senha, 10)
+                await Usuario.update(
+                    {
+                        senha: newPass
+                    },
+                    {
+                        where: {
+                            id: IdDes
+                        }
+                    })
+
+            }else{
+                console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+                console.log(req.user)
+                await Usuario.update(
+                    {
+                        google_id : req.user.id
+                    },
+                    {
+                        where: {
+                            id: IdDes
+                        }
+                    })
+            }
+          
 
             res.json(responsavel);
 

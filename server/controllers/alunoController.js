@@ -28,23 +28,31 @@ class AlunoController {
 
 
     async list(req, res) {
+        console.log(req.params)
         try {
-            const responsavel = await Responsavel.findOne({ where: { usuario_id: req.params.id } }).catch((e) => {
-                return { error: "Responsável não encontrado Identificador inválido" }
-            })
-            const usuario = Usuario.findOne({where:{id: req.params.id}})
+            const responsavel = await Responsavel.findOne({ where: { usuario_id: req.params.id } }).catch((e) => 
+                 { error: "Responsável não encontrado Identificador inválido" }
+            )
+            console.log("que caralhoooooooo", responsavel.id)
+            const usuario = await Usuario.findOne({where:{id: responsavel.usuario_id}}).catch((e) => 
+               
+              { error: "Usuário não encontrado Identificador inválido" }
+            )
+           
             if(usuario.tipo_usuario == 1){
                 const aluno = await Aluno.findAll({where:{responsavel_id:responsavel.id}})
-                res.json(aluno)
+             
+               return res.json(aluno)
 
             }else{
                 const aluno = await Aluno.findAll()
-                res.json(aluno)
+                return res.json(aluno)
 
             }
 
         } catch (error) {
-            res.json({ error: error })
+            console.log("error", error )
+            return res.json({ error: error })
         }
     }
 

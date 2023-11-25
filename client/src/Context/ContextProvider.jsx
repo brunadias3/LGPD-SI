@@ -7,7 +7,7 @@ export const GlobalContext = createContext();
 
 const GlobalProvider =  ({ children }) => {
   const [isLoggedIn, setLogIn] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
 
   return (
     <GlobalContext.Provider

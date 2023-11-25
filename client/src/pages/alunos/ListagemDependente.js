@@ -5,8 +5,10 @@ import { GlobalContext } from "../../Context/ContextProvider";
 
 
 function ListarDependente() {
+    console.log("jessussssssssssssss")
     
     const [alunos, setAlunos] = useState([])
+    var isLoading = false
     const navigate = useNavigate()
     const {user} = useContext(GlobalContext)
     const headers = user && user.tipo_usuario == 1?["Nome", "Editar"]:["Nome"]
@@ -23,9 +25,13 @@ function ListarDependente() {
                 navigate("/")
                 
             }
+            if(isLoading)
+                return
+            isLoading = true
             let url = 'http://localhost:3000/student/list/'+user.id
             fetch(url, {
                 method: 'GET',
+                credentials: "include",
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8'
                 }

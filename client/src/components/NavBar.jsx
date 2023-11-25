@@ -10,14 +10,32 @@ function NavBar() {
     const navigate = useNavigate()
     const id = 1
     const [perfil, setPerfil] = useState()
-    function LogOut(){
-        setUser(null)
-        navigate("/")
+    function LogOut(e){
+        
+        e.preventDefault()
+        let url = `http://localhost:3000/login/logout`
+        fetch(url, {
+            method: 'POST',
+            credentials: "include",
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+        }).then((resp) => resp.json()).then((data) => {
+
+            if (data.error) {
+                alert("ERRO: "+data.error)
+            } else {
+                setUser({})
+                 navigate("/")
+            }
+
+        })
+       
 
     }
 
     return (
-        <>{user === null?"":
+        <>{user.id === undefined ?"":
             <nav className=" border-gray-200 bg-gray-900">
 
                 <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -60,7 +78,7 @@ function NavBar() {
                                 </div>
                                 <div className="mt-5 hover:bg-gray-900 rounded-lg">
                                     <button
-                                    onClick={()=> LogOut()}
+                                    onClick={(e)=> LogOut(e)}
                                         type="button"
                                         style={{ color: "white", borderRadius: "10px" }}
                                         className={`p-3 w-full hover:drop-shadow-xl `}

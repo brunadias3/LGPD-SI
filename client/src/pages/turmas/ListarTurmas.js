@@ -12,6 +12,7 @@ function ListarTurmas() {
         let url = 'http://localhost:3000/team/list'
         fetch(url, {
             method: 'GET',
+            credentials: "include",
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             }
@@ -34,6 +35,7 @@ function ListarTurmas() {
         let url = `http://localhost:3000/team/delete/${id}`
         fetch(url, {
             method: 'DELETE',
+            credentials: "include",
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },

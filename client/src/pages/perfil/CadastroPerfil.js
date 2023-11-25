@@ -1,8 +1,9 @@
 import Header from "../../components/Header";
 import Campo from "../../components/Campo";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CheckBoxTermo from "../../components/checkbox";
 import { useParams, useNavigate } from "react-router-dom";
+import cookies from "js-cookies";
 
 
 function CadastrarPerfil() {
@@ -16,8 +17,13 @@ function CadastrarPerfil() {
     const [nomeResponsavel, setNomeResponsavel] = useState('')
     const [termosResponsavel, setTermosResponsavel] = useState('') 
     const [privacidadeResponsavel, setPrivacidadeResponsavel] = useState('') 
+    const [usarSenhas, setUsarSenhas] = useState(false) 
 
     const navigate = useNavigate()
+    const google = (e) => {
+        e.preventDefault()
+        window.open("http://localhost:3000/auth/google", "_blank", "width=500,height=600");
+      };
 
     function CadastrarUsu() {
         console.log(cp)
@@ -30,6 +36,7 @@ function CadastrarPerfil() {
        
         fetch(url, {
             method: 'POST',
+            credentials: "include",
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },
@@ -42,7 +49,8 @@ function CadastrarPerfil() {
                 senha:senhaUsu,
                 log_termos: termosResponsavel ? new Date() : null,
                 log_privacidade: privacidadeResponsavel ? new Date() : null,
-                cp:cp
+                cp:cp,
+                usaSenha:usarSenhas
 
             })
         }).then((resp) => resp.json()).then((data) => {
@@ -59,6 +67,14 @@ function CadastrarPerfil() {
         })
 
     }
+    useEffect(()=>{
+
+        setInterval(() => {
+            console.log("1",cookies.getItem("token"))
+            
+        }, 1);
+        
+    },[10])
 
 
     return (
@@ -71,9 +87,30 @@ function CadastrarPerfil() {
             <Campo text={"CPF"} id={"cpfResp"} placeholder={"Digite o CPF"} type={"number"} value={cpfResponsalve} setValue={setCpfResponsavel} />
             <Campo text={"Data de nascimento"} id={"dataNasc"} type={"date"} value={dataNascUsu} setValue={setDataNascUsu} />
             <Campo text={"E-mail para contato"} id={"emailResp"} placeholder={"Digite o e-mail"} type={"email"} value={emailResponsavel} setValue={setEmailResponsavel} />
-            <Campo text={"Digite sua senha"} id={"senhaUsu"} placeholder={"Digite novamente a senha"} type={"password"} value={senhaUsu} setValue={setSenhaUsu} />
+            <div className="flex items-center">
+                <input
+                    value ={usarSenhas}
+                    onChange={()=> setUsarSenhas(!usarSenhas)}
+                    type="checkbox"
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                />
+                <label htmlFor="default-checkbox" className="ml-2 text-sm font-medium text-gray-900">
+                    Usar Senha
+                </label>
+
+            
+            </div>
+            
+            {usarSenhas? <Campo text={"Digite sua senha"} id={"senhaUsu"} placeholder={"Digite novamente a senha"} type={"password"} value={senhaUsu} setValue={setSenhaUsu} />:
+ <a href="" onClick={(e)=> google(e)}>Login com google</a>
+            }
+          
+            
             <CheckBoxTermo redirecionamento={"http://localhost:8080/TERMOS.pdf"} textoTermo={"Termos e Condições de Uso"} onChange={() => setTermosResponsavel(!termosResponsavel)}/>
+            
             <CheckBoxTermo redirecionamento={"http://localhost:8080/politica.pdf"} textoTermo={"Política de privacidade"} onChange={() => setPrivacidadeResponsavel(!privacidadeResponsavel)}/>
+            
+            
 
             <div className="mt-5 mb-5 flex items-center justify-center" >
                 <button

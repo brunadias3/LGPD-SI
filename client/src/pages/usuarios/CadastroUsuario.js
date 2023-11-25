@@ -38,6 +38,7 @@ function CadastroUsuario() {
 
         fetch(url, {
             method: "POST",
+            credentials: "include",
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },

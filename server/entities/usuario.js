@@ -33,13 +33,18 @@ const Usuario = connection.define('usuarios', {
     },
     senha: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
         validate: {
             len: {
                 args: [8, Infinity],
                 msg: 'A senha deve ter pelo menos 8 caracteres.',
             },
         },
+    },
+    google_id:{
+
+        type: Sequelize.STRING,
+        allowNull: true,
     },
     createdAt: {
         type: Sequelize.DATE,

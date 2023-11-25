@@ -17,6 +17,7 @@ function ListarUsuario() {
         let url = 'http://localhost:3000/user/list'
         fetch(url, {
             method: 'GET',
+            credentials: "include",
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             }
@@ -46,6 +47,7 @@ function ListarUsuario() {
         let url = `http://localhost:3000/user/delete/${id}`
         fetch(url, {
             method: 'DELETE',
+            credentials: "include",
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },

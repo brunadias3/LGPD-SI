@@ -19,6 +19,7 @@ function EditarTurma() {
             let url = `http://localhost:3000/team/update/${id}`
             fetch(url, {
                 method: 'PUT',
+                credentials: "include",
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8'
                 },
@@ -43,6 +44,7 @@ function EditarTurma() {
             let url = `http://localhost:3000/team/get/${id}`
             fetch(url, {
                 method: 'GET',
+                credentials: "include",
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8'
                 }

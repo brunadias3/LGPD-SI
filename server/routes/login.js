@@ -5,6 +5,6 @@ const loginRouter = Router();
 
 loginRouter.post("/login", LoginController.login);
 loginRouter.get("/checkAuthentication", LoginController.checkAuthentication);
-loginRouter.get("/logout", LoginController.logOut);
+loginRouter.post("/logout", LoginController.logOut);
 
 export default loginRouter;
