@@ -3,6 +3,7 @@ import Campo from "../../components/Campo";
 import { useState } from "react";
 import CheckBoxTermo from "../../components/checkbox";
 import { useParams, useNavigate } from "react-router-dom";
+import CheckBoxEmail from "../../components/CheckEmail";
 
 
 function CadastrarPerfil() {
@@ -14,15 +15,15 @@ function CadastrarPerfil() {
     const [emailResponsavel, setEmailResponsavel] = useState('')
     const [rgResponsavel, setRgResponsavel] = useState('')
     const [nomeResponsavel, setNomeResponsavel] = useState('')
-    const [termosResponsavel, setTermosResponsavel] = useState('') 
-    const [privacidadeResponsavel, setPrivacidadeResponsavel] = useState('') 
+    const [statusTermos, setStatusTermos] = useState('') 
+    const [statusPrivilegios, setStatusPrivilegios] = useState('') 
+    const [statusEmail, setStatusEmail] = useState('false') 
 
     const navigate = useNavigate()
 
     function CadastrarUsu() {
         console.log(cp)
-        console.log("termosResponsavel:", termosResponsavel);
-        console.log("privacidadeResponsavel:", privacidadeResponsavel);
+        console.log(statusEmail)
 
 
         let url = 'http://localhost:3000/responsible/create/'
@@ -40,8 +41,9 @@ function CadastrarPerfil() {
                 data_nac: dataNascUsu,
                 nome: nomeResponsavel,
                 senha:senhaUsu,
-                log_termos: termosResponsavel ? new Date() : null,
-                log_privacidade: privacidadeResponsavel ? new Date() : null,
+                statusTermos: statusTermos,
+                statusPrivilegios: statusPrivilegios,
+                statusEmail: statusEmail,
                 cp:cp
 
             })
@@ -72,8 +74,9 @@ function CadastrarPerfil() {
             <Campo text={"Data de nascimento"} id={"dataNasc"} type={"date"} value={dataNascUsu} setValue={setDataNascUsu} />
             <Campo text={"E-mail para contato"} id={"emailResp"} placeholder={"Digite o e-mail"} type={"email"} value={emailResponsavel} setValue={setEmailResponsavel} />
             <Campo text={"Digite sua senha"} id={"senhaUsu"} placeholder={"Digite novamente a senha"} type={"password"} value={senhaUsu} setValue={setSenhaUsu} />
-            <CheckBoxTermo redirecionamento={"http://localhost:8080/TERMOS.pdf"} textoTermo={"Termos e Condições de Uso"} onChange={() => setTermosResponsavel(!termosResponsavel)}/>
-            <CheckBoxTermo redirecionamento={"http://localhost:8080/politica.pdf"} textoTermo={"Política de privacidade"} onChange={() => setPrivacidadeResponsavel(!privacidadeResponsavel)}/>
+            <CheckBoxTermo redirecionamento={"http://localhost:8080/TERMOS.pdf"} textoTermo={"Termos e Condições de Uso"} onChange={() => setStatusTermos(!statusTermos)}/>
+            <CheckBoxTermo redirecionamento={"http://localhost:8080/politica.pdf"} textoTermo={"Política de privacidade"} onChange={() => setStatusPrivilegios(!statusPrivilegios)}/>
+            <CheckBoxEmail onChange={() => setStatusEmail(!statusEmail)} />
 
             <div className="mt-5 mb-5 flex items-center justify-center" >
                 <button
