@@ -1,10 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../Context/ContextProvider";
 import { useNavigate } from "react-router-dom";
-import GithubIcon from "mdi-react/GithubIcon";
-import qs from "query-string";
-import axios from "axios";
-import { Octokit } from "https://esm.sh/@octokit/core";
+
 function Login() {
     var stop = false
     var token = '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'
@@ -15,21 +12,13 @@ function Login() {
     useEffect(() => {
         console.log(user.id)
         setInterval(() => {
-            if (user.id ) {
-                navigate('/home')
-                return
+            getUser()
 
-            } else {
-
-                getUser()
-
-            }
-
-        }, 5 * 1000);
+        }, 2 * 1000);
 
 
     }, {
-        
+
     })
 
 
@@ -71,6 +60,9 @@ function Login() {
 
 
     function getUser() {
+        if (stop) {
+            return
+        }
 
         const url = "http://localhost:3000/login/checkAuthentication";
 

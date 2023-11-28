@@ -1,17 +1,17 @@
 
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { GlobalContext } from '../Context/ContextProvider'
-import {  useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 
 function NavBar() {
     const [isChecked, setIsChecked] = useState(false)
-    const {user, setUser} = useContext(GlobalContext)
+    const { user, setUser } = useContext(GlobalContext)
     const navigate = useNavigate()
     const id = 1
     const [perfil, setPerfil] = useState()
-    function LogOut(e){
-        
+    function LogOut(e) {
+
         e.preventDefault()
         let url = `http://localhost:3000/login/logout`
         fetch(url, {
@@ -23,19 +23,19 @@ function NavBar() {
         }).then((resp) => resp.json()).then((data) => {
 
             if (data.error) {
-                alert("ERRO: "+data.error)
+                alert("ERRO: " + data.error)
             } else {
                 setUser({})
-                 navigate("/")
+                navigate("/")
             }
 
         })
-       
+
 
     }
 
     return (
-        <>{user.id === undefined ?"":
+        <>{user.id === undefined ? "" :
             <nav className=" border-gray-200 bg-gray-900">
 
                 <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -58,8 +58,8 @@ function NavBar() {
 
 
                                     <div>
-                                        
-                                        <p className="text-gray-500 text-sm font-semiboldtext-gray-400">{user?user.login:""}</p>
+
+                                        <p className="text-gray-500 text-sm font-semiboldtext-gray-400">{user ? user.login : ""}</p>
                                     </div>
 
                                 </div>
@@ -70,7 +70,7 @@ function NavBar() {
                                         <button
                                             type="button"
                                             className=" text-xl rounded-lg p-3 hover:bg-light-gray  text-gray-200"
-                                            onClick={() => navigate("/editar-perfil/" + id) }
+                                            onClick={() => navigate("/editar-perfil/" + id)}
                                         >
                                             Editar Perfil
                                         </button>
@@ -78,7 +78,7 @@ function NavBar() {
                                 </div>
                                 <div className="mt-5 hover:bg-gray-900 rounded-lg">
                                     <button
-                                    onClick={(e)=> LogOut(e)}
+                                        onClick={(e) => LogOut(e)}
                                         type="button"
                                         style={{ color: "white", borderRadius: "10px" }}
                                         className={`p-3 w-full hover:drop-shadow-xl `}
@@ -93,16 +93,16 @@ function NavBar() {
                     </div>
                     <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" >
                         <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:border-0  bg-gray-800 md:bg-gray-900 border-gray-700">
-                        
+
                             <li>
                                 <a onClick={() => navigate("/home")} className="cursor-pointer block py-2 pl-3 pr-4  rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 text-white hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700" >Home</a>
                             </li>
-                            {user && user.tipo_usuario == 1?
-                            <li>
-                                <a onClick={() => navigate( "/cadastro-dependente")} className="cursor-pointer block py-2 pl-3 pr-4  rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 text-white hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Cadastrar Aluno</a>
-                            </li>:""}
+                            {user && user.tipo_usuario == 1 ?
+                                <li>
+                                    <a onClick={() => navigate("/cadastro-dependente")} className="cursor-pointer block py-2 pl-3 pr-4  rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 text-white hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Cadastrar Aluno</a>
+                                </li> : ""}
 
-                          
+
                         </ul>
                     </div>
                 </div>
