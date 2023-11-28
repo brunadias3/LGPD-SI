@@ -1,20 +1,32 @@
 import Responsavel from "../entities/responsavel.js";
 import Usuario from "../entities/usuario.js";
+import LogTermos from "../entities/logTermos.js";
 import CryptoJS from "crypto-js"
 import * as bcrypt from "bcrypt";
+import { Sequelize } from "sequelize";
 
 class ResponsavelController {
     async create(req, res) {
         try {
+            const obri = ['statusTermos', 'statusPrivilegios', 'statusEmail'];
 
-            console.log("kerelhoooooon")
+            for (const tem of obri) {
+                if (!req.body[tem]) {
+                    return res.json({ error: `${tem} é obrigatório na body.` });
+                }
+            }
+            if (!(req.body.statusTermos && req.body.statusPrivilegios)) {
+                return res.json({ error: 'statusTermos e statusPrivilegios devem ser true para permitir o cadastro.' });
+            }
+
+           
             const chave = process.env.CHAVE;
             const texCif = decodeURIComponent(req.body.cp);
             const texDes = CryptoJS.AES.decrypt(texCif, chave);
             const IdDes = texDes.toString(CryptoJS.enc.Utf8);
             
     
-            console.log("aaaaaaaaaaaa",IdDes)
+
 
             const responsavel = await Responsavel.create({
 
@@ -24,24 +36,45 @@ class ResponsavelController {
                 rg: req.body.rg,
                 data_nac: req.body.data_nac,
                 nome: req.body.nome,
-                log_termos: req.body.log_termos,
-                log_privacidade: req.body.log_privacidade,
                 usuario_id: IdDes,
                 
                 
                 
             });
+            if (req.body.statusTermos) {
+                await LogTermos.create({ 
+                    responsavel_id: responsavel.id, 
+                    termo: 'Termos', 
+                    status: req.body.statusTermos });
+            }
+
+            if (req.body.statusPrivilegios) {
+                await LogTermos.create({ 
+                    responsavel_id: responsavel.id, 
+                    termo: 'Privilegios', 
+                    status: req.body.statusPrivilegios });
+            }
+
+            if (req.body.statusEmail) {
+                await LogTermos.create({ 
+                    responsavel_id: responsavel.id, 
+                    termo: 'Permissão Email', 
+                    status: req.body.statusEmail });
+            }
+
+
+            
             if(req.body.usaSenha){
                 var newPass = await bcrypt.hash(req.body.senha, 10)
-                await Usuario.update(
-                    {
-                        senha: newPass
-                    },
-                    {
-                        where: {
-                            id: IdDes
-                        }
-                    })
+            await Usuario.update(
+                {
+                    senha: newPass
+                },
+                {
+                    where: {
+                        id: IdDes
+                    }
+                })
 
             }else{
                 console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
@@ -100,6 +133,27 @@ class ResponsavelController {
                     }
                 })
 
+                if (req.body.statusTermos) {
+                    await LogTermos.create({ responsavel_id: 
+                        req.params.id, 
+                        termo: 'Termos', 
+                        status: req.body.statusTermos });
+                }
+    
+                if (req.body.statusPrivilegios) {
+                    await LogTermos.create({ 
+                        responsavel_id: req.params.id, 
+                        termo: 'Privilegios', 
+                        status: req.body.statusPrivilegios });
+                }
+    
+                if (req.body.statusEmail) {
+                    await LogTermos.create({ 
+                        responsavel_id: req.params.id, 
+                        termo: 'Permissão Email', 
+                        status: req.body.statusEmail });
+                }
+
              if(req.body.senha){
                 await Usuario.update({
                     senha:await bcrypt.hash(req.body.senha, 10)
@@ -113,6 +167,37 @@ class ResponsavelController {
 
         } catch (error) {
             res.json({ error: error })
+        }
+    }
+
+    async getLog(req, res) {
+        try {
+            const logs = await LogTermos.findAll({
+                attributes: {
+                    exclude: ['updatedAt'],
+                    include: [
+                        [
+                            Sequelize.fn(
+                                'date_format',
+                                Sequelize.fn('convert_tz', Sequelize.col('createdAt'), '+00:00', '-03:00'),
+                                '%d/%m/%Y %H:%i:%s'
+                            ),
+                            'date'
+                        ]
+                    ]
+                },
+                where: {
+                    responsavel_id: req.params.id,
+                    termo: { [Sequelize.Op.like]: `%${req.query.termo}%` }
+                },
+                order: [['createdAt', 'DESC']]
+            });
+
+            res.json(logs);
+
+
+        } catch (error) {
+            console.error(error)
         }
     }
 

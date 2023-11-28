@@ -1,5 +1,7 @@
 import Usuario from "../entities/usuario.js";
 import CryptoJS from "crypto-js"
+import bcrypt from 'bcrypt';
+
 
 function getPassword() {
     var chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJLMNOPQRSTUVWXYZ!@#$";
@@ -61,14 +63,16 @@ class UsuarioController {
             res.status(500).json({ error: error });
         }
     }
-
     async update(req, res) {
         try {
+            const saltRounds = 10;
+            const hashedPassword = await bcrypt.hash(req.body.senha, saltRounds);
+    
             await Usuario.update(
                 {
                     login: req.body.login,
                     tipo_usuario: req.body.tipo_usuario,
-                    senha: req.body.senha
+                    senha: hashedPassword
                 },
                 {
                     where: {
@@ -76,13 +80,12 @@ class UsuarioController {
                     }
                 }
             );
-
-            res.json({ message: "Os Dados Foram Atualizados com Sucesso." });
-
-            res.status(200).json({ message: "Os Dados Foram Atualizados com Sucesso." });
-
+    
+            return res.json({ message: "Os Dados Foram Atualizados com Sucesso." });
+    
         } catch (error) {
-            res.json({ error: error });
+            console.log(error); 
+            return res.json({ error: "Erro ao atualizar usuário." });
         }
     }
     

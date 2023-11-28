@@ -3,8 +3,8 @@ import Campo from "../../components/Campo";
 import { useEffect, useState } from "react";
 import CheckBoxTermo from "../../components/checkbox";
 import { useParams, useNavigate } from "react-router-dom";
+import CheckBoxEmail from "../../components/CheckEmail";
 import cookies from "js-cookies";
-
 
 function CadastrarPerfil() {
 
@@ -15,6 +15,9 @@ function CadastrarPerfil() {
     const [emailResponsavel, setEmailResponsavel] = useState('')
     const [rgResponsavel, setRgResponsavel] = useState('')
     const [nomeResponsavel, setNomeResponsavel] = useState('')
+    const [statusTermos, setStatusTermos] = useState('') 
+    const [statusPrivilegios, setStatusPrivilegios] = useState('') 
+    const [statusEmail, setStatusEmail] = useState('false') 
     const [termosResponsavel, setTermosResponsavel] = useState('') 
     const [privacidadeResponsavel, setPrivacidadeResponsavel] = useState('') 
     const [usarSenhas, setUsarSenhas] = useState(false) 
@@ -27,8 +30,7 @@ function CadastrarPerfil() {
 
     function CadastrarUsu() {
         console.log(cp)
-        console.log("termosResponsavel:", termosResponsavel);
-        console.log("privacidadeResponsavel:", privacidadeResponsavel);
+        console.log(statusEmail)
 
 
         let url = 'http://localhost:3000/responsible/create/'
@@ -50,7 +52,11 @@ function CadastrarPerfil() {
                 log_termos: termosResponsavel ? new Date() : null,
                 log_privacidade: privacidadeResponsavel ? new Date() : null,
                 cp:cp,
-                usaSenha:usarSenhas
+                usaSenha:usarSenhas,
+                statusTermos: statusTermos,
+                statusPrivilegios: statusPrivilegios,
+                statusEmail: statusEmail,
+                cp:cp
 
             })
         }).then((resp) => resp.json()).then((data) => {
@@ -109,7 +115,7 @@ function CadastrarPerfil() {
             <CheckBoxTermo redirecionamento={"http://localhost:8080/TERMOS.pdf"} textoTermo={"Termos e Condições de Uso"} onChange={() => setTermosResponsavel(!termosResponsavel)}/>
             
             <CheckBoxTermo redirecionamento={"http://localhost:8080/politica.pdf"} textoTermo={"Política de privacidade"} onChange={() => setPrivacidadeResponsavel(!privacidadeResponsavel)}/>
-            
+            <CheckBoxEmail onChange={() => setStatusEmail(!statusEmail)} />
             
 
             <div className="mt-5 mb-5 flex items-center justify-center" >
