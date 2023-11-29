@@ -53,9 +53,8 @@ function CadastrarPerfil() {
                 statusTermos: statusTermos,
                 statusPrivilegios: statusPrivilegios,
                 statusEmail: statusEmail,
-                cp:cp
-
             })
+            
         }).then((resp) => resp.json()).then((data) => {
             console.log("data",data)
 

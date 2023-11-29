@@ -8,7 +8,7 @@ import { Sequelize } from "sequelize";
 class ResponsavelController {
     async create(req, res) {
         try {
-            const obri = ['statusTermos', 'statusPrivilegios', 'statusEmail'];
+            const obri = ['statusTermos', 'statusPrivilegios'];
 
             for (const tem of obri) {
                 if (!req.body[tem]) {
@@ -19,69 +19,75 @@ class ResponsavelController {
                 return res.json({ error: 'statusTermos e statusPrivilegios devem ser true para permitir o cadastro.' });
             }
 
-           
+
             const chave = process.env.CHAVE;
             const texCif = decodeURIComponent(req.body.cp);
             const texDes = CryptoJS.AES.decrypt(texCif, chave);
             const IdDes = texDes.toString(CryptoJS.enc.Utf8);
-            
-    
-
 
             const responsavel = await Responsavel.create({
 
-                id:0,
+                id: 0,
                 cpf: req.body.cpf,
                 email: req.body.email,
                 rg: req.body.rg,
                 data_nac: req.body.data_nac,
                 nome: req.body.nome,
                 usuario_id: IdDes,
-                
-                
-                
+
+
+
             });
             if (req.body.statusTermos) {
-                await LogTermos.create({ 
-                    responsavel_id: responsavel.id, 
-                    termo: 'Termos', 
-                    status: req.body.statusTermos });
+                await LogTermos.create({
+                    responsavel_id: responsavel.id,
+                    termo: 'Termos',
+                    status: req.body.statusTermos
+                });
             }
 
             if (req.body.statusPrivilegios) {
-                await LogTermos.create({ 
-                    responsavel_id: responsavel.id, 
-                    termo: 'Privilegios', 
-                    status: req.body.statusPrivilegios });
+                await LogTermos.create({
+                    responsavel_id: responsavel.id,
+                    termo: 'Privilegios',
+                    status: req.body.statusPrivilegios
+                });
             }
 
             if (req.body.statusEmail) {
-                await LogTermos.create({ 
-                    responsavel_id: responsavel.id, 
-                    termo: 'Permissão Email', 
-                    status: req.body.statusEmail });
+                await LogTermos.create({
+                    responsavel_id: responsavel.id,
+                    termo: 'Permissão Email',
+                    status: req.body.statusEmail
+                });
+            } else {
+                await LogTermos.create({
+                    responsavel_id: responsavel.id,
+                    termo: 'Permissão Email',
+                    status: 'false'
+                });
             }
 
 
-            
-            if(req.body.usaSenha){
-                var newPass = await bcrypt.hash(req.body.senha, 10)
-            await Usuario.update(
-                {
-                    senha: newPass
-                },
-                {
-                    where: {
-                        id: IdDes
-                    }
-                })
 
-            }else{
+            if (req.body.usaSenha) {
+                var newPass = await bcrypt.hash(req.body.senha, 10)
+                await Usuario.update(
+                    {
+                        senha: newPass
+                    },
+                    {
+                        where: {
+                            id: IdDes
+                        }
+                    })
+
+            } else {
                 console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
                 console.log(req.user)
                 await Usuario.update(
                     {
-                        google_id : req.user.id
+                        google_id: req.user.id
                     },
                     {
                         where: {
@@ -89,7 +95,7 @@ class ResponsavelController {
                         }
                     })
             }
-          
+
 
             res.json(responsavel);
 
@@ -110,7 +116,7 @@ class ResponsavelController {
         }
     }
 
-    async listOne(req, res){
+    async listOne(req, res) {
         const id = parseInt(req.params.id)
         const responsavel = await Responsavel.findOne({ where: { usuario_id: id } }).catch((e) => {
             return { error: "Identificador inválido" }
@@ -133,36 +139,41 @@ class ResponsavelController {
                     }
                 })
 
-                if (req.body.statusTermos) {
-                    await LogTermos.create({ responsavel_id: 
-                        req.params.id, 
-                        termo: 'Termos', 
-                        status: req.body.statusTermos });
-                }
-    
-                if (req.body.statusPrivilegios) {
-                    await LogTermos.create({ 
-                        responsavel_id: req.params.id, 
-                        termo: 'Privilegios', 
-                        status: req.body.statusPrivilegios });
-                }
-    
-                if (req.body.statusEmail) {
-                    await LogTermos.create({ 
-                        responsavel_id: req.params.id, 
-                        termo: 'Permissão Email', 
-                        status: req.body.statusEmail });
-                }
+            if (req.body.statusTermos) {
+                await LogTermos.create({
+                    responsavel_id:
+                        req.params.id,
+                    termo: 'Termos',
+                    status: req.body.statusTermos
+                });
+            }
 
-             if(req.body.senha){
+            if (req.body.statusPrivilegios) {
+                await LogTermos.create({
+                    responsavel_id: req.params.id,
+                    termo: 'Privilegios',
+                    status: req.body.statusPrivilegios
+                });
+            }
+
+            if (req.body.statusEmail) {
+                await LogTermos.create({
+                    responsavel_id: req.params.id,
+                    termo: 'Permissão Email',
+                    status: req.body.statusEmail
+                });
+            }
+
+            if (req.body.senha) {
                 await Usuario.update({
-                    senha:await bcrypt.hash(req.body.senha, 10)
+                    senha: await bcrypt.hash(req.body.senha, 10)
                 }, {
-                    where:{
+                    where: {
 
-                        id:req.params.id
-                }})
-             }   
+                        id: req.params.id
+                    }
+                })
+            }
             res.json({ message: "Os Dados Foram Atualizados com Sucesso." })
 
         } catch (error) {
@@ -201,5 +212,5 @@ class ResponsavelController {
         }
     }
 
- 
+
 } export default new ResponsavelController()

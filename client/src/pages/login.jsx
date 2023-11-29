@@ -133,7 +133,7 @@ function Login() {
                             >
 
 
-                                <span>Login com o Google</span>
+                                <span style={{color: 'white'}}>Login com o Google</span>
 
                             </button>
                         </form>

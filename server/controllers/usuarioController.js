@@ -60,6 +60,7 @@ class UsuarioController {
                 return res.status(response.status).json({ error: 'Erro ao enviar o Código de autenticação ' });
             }
         } catch (error) {
+            console.log(error)
             res.status(500).json({ error: error });
         }
     }
