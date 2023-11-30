@@ -52,7 +52,7 @@ function CadastrarPerfil() {
                 usaSenha:usarSenhas,
                 statusTermos: statusTermos,
                 statusPrivilegios: statusPrivilegios,
-                statusEmail: statusEmail,
+                statusEmail: statusEmail.toString()
             })
             
         }).then((resp) => resp.json()).then((data) => {
